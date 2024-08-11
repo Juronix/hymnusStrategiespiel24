@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.HashSet;
+import java.util.PriorityQueue;
 
 import general.Team;
 import path.Path;
@@ -16,15 +18,16 @@ public abstract class City implements Serializable {
     private final String name;
     private final int cityLevel;
     private final int id;
+    private int distanceToRome = Integer.MAX_VALUE;
     private double multiplier = 1.0;
     private Optional<Bonus> optionalBonus;
 
-    private Set<Team> teamsWitchTradingPost;
+    private Set<Team> teamsWithTradingPost;
     private Set<Path> paths;
 
+    private static City rome;
     private static Map<String, Integer> idMap;
     private static Map<Integer, City> cityMap;
-
 
     /**
      * Constructs a City with the specified name and level.
@@ -46,9 +49,9 @@ public abstract class City implements Serializable {
     }
 
     public void createNewCity(String name, int cityLevel, Optional<Bonus> optionalBonus) {
-        switch(cityLevel) {
+        switch (cityLevel) {
             case 0:
-                new Rome(name);
+                rome = new Rome(name);
                 break;
             case 1:
                 new CityLvl1(name, optionalBonus);
@@ -61,12 +64,45 @@ public abstract class City implements Serializable {
                 break;
             default:
                 throw new IllegalArgumentException("Invalid city level");
-            
         }
     }
 
     public abstract double getReputation();
+
     public abstract double getCapacityNeeded();
+
+    public static void refreshDistancesToRome() {
+        PriorityQueue<City> cityQueue = new PriorityQueue<City>(
+                (d1, d2) -> Integer.compare(d1.getDistanceToRome(), d2.getDistanceToRome()));
+        cityMap.values().forEach(city -> city.distanceToRome = Integer.MAX_VALUE);
+        rome.setDistanceToRome(0);
+        cityQueue.add(rome);
+
+        Set<City> searchDone = new HashSet<City>();
+
+        while (!cityQueue.isEmpty()) {
+            City city = cityQueue.poll();
+            searchDone.add(city);
+            for (Path path : city.paths) {
+                City nextCity;
+                if (path.getCity1() == city) {
+                    nextCity = path.getCity2();
+                } else {
+                    nextCity = path.getCity1();
+                }
+                if (!searchDone.contains(nextCity)) {
+                    int newDistance = city.getDistanceToRome() + 1;
+                    if (newDistance < nextCity.getDistanceToRome()) {
+                        nextCity.setDistanceToRome(newDistance);
+                        if(cityQueue.contains(nextCity)) {
+                            cityQueue.remove(nextCity);
+                        }
+                        cityQueue.add(nextCity);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Calculates the Reputation based on connection efficiency and team multiplier.
@@ -83,41 +119,56 @@ public abstract class City implements Serializable {
         paths.add(path);
     }
 
-    public void buildTradingPost(Team team) {
-        teamsWitchTradingPost.add(team);
+    public void addTradePost(Team team) {
+        teamsWithTradingPost.add(team);
     }
+
     public boolean hasTradingPost(Team team) {
-        return teamsWitchTradingPost.contains(team);
+        return teamsWithTradingPost.contains(team);
     }
 
     public String getName() {
         return name;
     }
+
     public int getCityLevel() {
         return cityLevel;
     }
+
     public double getMultiplier() {
         return multiplier;
     }
+
     public Optional<Bonus> getOptionalBonus() {
         return optionalBonus;
     }
+
     public int getId() {
         return id;
     }
+
     public static Map<String, Integer> getIdMap() {
         return idMap;
     }
+
     public static int getId(String name) {
         return idMap.get(name);
     }
+
     public static City getCity(int id) {
         return cityMap.get(id);
     }
+
     public static City getCity(String name) {
         return cityMap.get(idMap.get(name));
     }
 
+    private int getDistanceToRome() {
+        return distanceToRome;
+    }
+
+    private void setDistanceToRome(int distance) {
+        distanceToRome = distance;
+    }
+
 }
-
-
