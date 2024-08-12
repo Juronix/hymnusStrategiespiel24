@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    java
 }
 
 repositories {
@@ -34,7 +35,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "hymnusstrategiespiel24.App"
+    mainClass = "general.App"
 }
 
 tasks.named<Test>("test") {
