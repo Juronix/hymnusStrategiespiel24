@@ -11,6 +11,7 @@ public abstract class TradeUnit implements Serializable {
 
     public TradeUnit(Team team, Path path) {
         this.team = team;
+        team.addTradeUnit(this);
         path.addTradeUnit(this);
     }
 

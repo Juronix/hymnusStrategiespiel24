@@ -14,7 +14,7 @@ import path.Path;
  * Abstract class representing a City.
  * Provides a template for city-level specific implementations.
  */
-public abstract class City implements Serializable {
+public abstract class City implements Serializable, Comparable<City> {
     private final String name;
     private final int cityLevel;
     private final int id;
@@ -71,6 +71,16 @@ public abstract class City implements Serializable {
 
     public abstract double getCapacityNeeded();
 
+    @Override
+    public int compareTo(City city) {
+        int levelComparator = Integer.compare(this.getCityLevel(), city.getCityLevel());
+        if (levelComparator == 0) {
+            return Integer.compare(this.getDistanceToRome(), city.getDistanceToRome());
+        } else {
+            return levelComparator;
+        }
+    }
+
     public static void refreshDistancesToRome() {
         PriorityQueue<City> cityQueue = new PriorityQueue<City>(
                 (d1, d2) -> Integer.compare(d1.getDistanceToRome(), d2.getDistanceToRome()));
@@ -105,14 +115,10 @@ public abstract class City implements Serializable {
     }
 
     /**
-     * Calculates the Reputation based on connection efficiency and team multiplier.
-     *
-     * @param connectionEfficiency the efficiency of the connection to Rome
-     * @param teamMultiplier       the team-specific multiplier
-     * @return the calculated Reputation
+     * 
      */
-    public double calculateReputation(double connectionEfficiency, double teamMultiplier) {
-        return cityLevel * multiplier * teamMultiplier * connectionEfficiency;
+    public double getReputationForTrade(Team team, double capacityUsed, double reputationMultiplier) {
+        return 0;
     };
 
     public void addPath(Path path) {
