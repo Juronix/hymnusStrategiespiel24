@@ -9,26 +9,23 @@ public class TeamsCity {
 
     private final City city;
     private final Set<TeamsPath> teamPaths;
-    private int distanceToRome;
-    private double capacityUsed;
+    private int distanceToRome = Integer.MAX_VALUE;
+    private double capacityUsed = 0.0;
 
     public TeamsCity(City city, Set<TeamsPath> teamPaths) {
         this.city = city;
         this.teamPaths = teamPaths;
-        resetCapacityUsed();
     }
 
     public TeamsCity(City city, TeamsPath teamPath) {
         this.city = city;
         this.teamPaths = new HashSet<>();
         this.teamPaths.add(teamPath);
-        resetCapacityUsed();
     }
 
     public TeamsCity(City city) {
         this.city = city;
         this.teamPaths = new HashSet<>();
-        resetCapacityUsed();
     }
 
     public void resetCapacityUsed() {
@@ -58,9 +55,13 @@ public class TeamsCity {
     public void setDistanceToRome(int distanceToRome) {
         this.distanceToRome = distanceToRome;
     }
-
+/*
     public void resetDistanceToRome() {
         distanceToRome = Integer.MAX_VALUE;
+    }
+*/
+    public void addPath(TeamsPath teamsPath) {
+        teamPaths.add(teamsPath);
     }
 
 }

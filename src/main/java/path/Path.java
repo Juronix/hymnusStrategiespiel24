@@ -57,7 +57,7 @@ public abstract class Path implements Serializable {
     }
 
     public City getOtherCity(City city) {
-        if(city.equals(city1)) {
+        if(city == city1) {
             return city2;
         } else {
             return city1;

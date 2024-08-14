@@ -17,6 +17,7 @@ public class Team implements Serializable {
     public Team(String name) {
         this.name = name;
         this.teamsGraph = new TeamsGraph();
+        City.getRome().addTradePost(this);
     }
 
 
@@ -37,7 +38,6 @@ public class Team implements Serializable {
     public void addTradeUnit(Path path, TradeUnit tradeUnit) {
         teamsGraph.addTradeUnit(path, tradeUnit);
     }
-
 
     public String getName() {
         return name;

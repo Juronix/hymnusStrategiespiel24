@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import tradeUnit.TradeUnit;
-
+/* 
 public class TeamsPathProperties {
 
     private final Set<TradeUnit> tradeUnits;
@@ -59,3 +59,4 @@ public class TeamsPathProperties {
     }
 
 }
+*/

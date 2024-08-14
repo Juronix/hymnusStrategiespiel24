@@ -20,22 +20,12 @@ public class TeamsGraph {
     }
 
     public void giveReputationForTrade() {
-        refreshDistanceToRome();
-        double maxFlow = calculateMaxFlowToRome();
-        for (TeamsCity city : teamCityMap.values()) {
-            city.resetCapacityUsed();
-        }
-        if (maxFlow > 0) {
-            for (TeamsCity city : teamCityMap.values()) {
-                city.increaseCapacityUsed(city.getDistanceToRome() * maxFlow);
-            }
-        }
+        
     }
 
-    public void refreshDistanceToRome() {
+    public void refreshDistancesToRome() {
         PriorityQueue<TeamsCity> cityQueue = new PriorityQueue<>(
                 Comparator.comparingInt(TeamsCity::getDistanceToRome));
-        teamCityMap.values().forEach(TeamsCity::resetDistanceToRome);
         teamsRome.setDistanceToRome(0);
         cityQueue.add(teamsRome);
 
@@ -135,7 +125,10 @@ public class TeamsGraph {
         if (teamPathMap.containsKey(path)) {
             teamPathMap.get(path).addTradeUnit(tradeUnit);
         } else {
-            teamPathMap.put(path, new TeamsPath(path, tradeUnit));
+            TeamsPath teamsPath = new TeamsPath(path, tradeUnit);
+            teamCityMap.get(path.getCity1()).addPath(teamsPath);
+            teamCityMap.get(path.getCity2()).addPath(teamsPath);
+            teamPathMap.put(path, teamsPath);
         }
     }
 
@@ -153,5 +146,9 @@ public class TeamsGraph {
 
     public TeamsPath getTeamsPath(Path path) {
         return teamPathMap.get(path);
+    }
+
+    public void setRomeTo0() {
+        teamsRome.setDistanceToRome(0);
     }
 }

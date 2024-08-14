@@ -25,8 +25,7 @@ public class TeamsGraphTest {
 
     @BeforeEach
     public void setup() {
-        team = new Team("TestTeam");
-        teamsGraph = team.getTeamsGraph();
+        
         
         // Städte erstellen
         City.createNewCity("Rome", 0, Optional.empty());
@@ -40,14 +39,6 @@ public class TeamsGraphTest {
         City cityB = City.getCity("CityB");
         City cityC = City.getCity("CityC");
         City cityD = City.getCity("CityD");
-        
-
-        // Städte 
-        team.createTradePost(rome);
-        team.createTradePost(cityA);
-        team.createTradePost(cityB);
-        team.createTradePost(cityC);
-        team.createTradePost(cityD);
 
         // Pfade hinzufügen
         Path pathRA = new Road(rome, cityA);
@@ -56,7 +47,16 @@ public class TeamsGraphTest {
         Path pathCD = new Road(cityC, cityD);
         Path pathDR = new Road(cityD, rome);
 
-        // Pfade mit Kapazitäten hinzufügen
+        team = new Team("TestTeam");
+        teamsGraph = team.getTeamsGraph();
+
+        // Handelsposten erstellen 
+        team.createTradePost(cityA);
+        team.createTradePost(cityB);
+        team.createTradePost(cityC);
+        team.createTradePost(cityD);
+
+        // Handelseinheiten erstellen
         new Donkey(team, pathRA);
         new Donkey(team, pathAB);
         new Donkey(team, pathBC);
@@ -65,7 +65,9 @@ public class TeamsGraphTest {
 
 
         City.refreshDistancesToRome();
-        teamsGraph.refreshDistanceToRome();
+        teamsGraph.refreshDistancesToRome();
+
+        teamsGraph.setRomeTo0();
     }
 
     @Test
@@ -81,9 +83,11 @@ public class TeamsGraphTest {
 
         // Konsolenausgabe für das Ergebnis
         System.out.println("Maximaler Fluss nach Rom: " + maxFlow);
+
+        teamsGraph.setRomeTo0();
         
         // Konsolenausgabe der Städte und ihrer Eigenschaften
-        System.out.println("\nStädte:");
+        System.out.println("\nStaedte:");
         System.out.printf("%-15s%-20s%-25s%-20s\n", "Stadtname", "Distanz nach Rom", "Team Distanz nach Rom", "Genutzte Kapazität");
         System.out.println("--------------------------------------------------------------------------");
         Collection<TeamsCity> tea = teamsGraph.getTeamCities();
