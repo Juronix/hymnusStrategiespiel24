@@ -52,7 +52,7 @@ public class TeamsPath {
         return tradeCapacity;
     }
 
-    public double getTradeCapacityUsed() {
+    public double getCapacityUsed() {
         return tradeCapacityUsed;
     }
 

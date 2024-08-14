@@ -64,4 +64,8 @@ public class TeamsCity {
         teamPaths.add(teamsPath);
     }
 
+    public void setCapacityUsed(double capacityUsed) {
+        this.capacityUsed = capacityUsed;
+    }
+
 }

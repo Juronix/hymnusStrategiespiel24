@@ -10,11 +10,8 @@ import path.Path;
 import path.Road;
 import city.City;
 import tradeUnit.Donkey;
-import tradeUnit.TradeUnit;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -63,7 +60,6 @@ public class TeamsGraphTest {
         new Donkey(team, pathCD);
         new Donkey(team, pathDR);
 
-
         City.refreshDistancesToRome();
         teamsGraph.refreshDistancesToRome();
 
@@ -75,12 +71,6 @@ public class TeamsGraphTest {
         // Teste die Berechnung des maximalen Flusses
         double maxFlow = teamsGraph.calculateMaxFlowToRome();
 
-        Collection<City> asd = City.getNonRomeCities();
-        City romeeee = City.getRome();
-
-        Collection<TeamsCity> asd2 = team.getTeamsGraph().getTeamCities();
-        TeamsCity romeeee2 = team.getTeamsGraph().getTeamsCity(City.getRome());
-
         // Konsolenausgabe für das Ergebnis
         System.out.println("Maximaler Fluss nach Rom: " + maxFlow);
 
@@ -90,7 +80,6 @@ public class TeamsGraphTest {
         System.out.println("\nStaedte:");
         System.out.printf("%-15s%-20s%-25s%-20s\n", "Stadtname", "Distanz nach Rom", "Team Distanz nach Rom", "Genutzte Kapazität");
         System.out.println("--------------------------------------------------------------------------");
-        Collection<TeamsCity> tea = teamsGraph.getTeamCities();
         for (TeamsCity city : teamsGraph.getTeamCities()) {
             System.out.printf("%-15s%-20d%-25d%-20.2f\n", 
                 city.getCity().getName(), 

@@ -50,85 +50,32 @@ public class TeamsGraph {
         }
     }
 
+
+    
     public double calculateMaxFlowToRome() {
-        double maxFlow = 0;
-        List<TeamsPath> path;
-
-        while ((path = findAugmentingPath()) != null) {
-            double pathFlow = Double.MAX_VALUE;
-
-            for (TeamsPath edge : path) {
-                pathFlow = Math.min(pathFlow, edge.getFreeTradeCapacity());
-            }
-
-            for (TeamsPath edge : path) {
-                edge.increaseCapacityUsed(pathFlow);
-            }
-
-            maxFlow += pathFlow;
-        }
-
-        return maxFlow;
+        
+        return 0.0;
     }
+    
 
-    private List<TeamsPath> findAugmentingPath() {
-        PriorityQueue<TeamsCity> queue = new PriorityQueue<>(Comparator.comparingInt(TeamsCity::getDistanceToRome));
-        Map<TeamsCity, TeamsPath> pathMap = new HashMap<>();
-        Set<TeamsCity> visited = new HashSet<>();
-
-        queue.add(teamsRome);
-
-        while (!queue.isEmpty()) {
-            TeamsCity city = queue.poll();
-
-            if (visited.contains(city)) {
-                continue;
-            }
-
-            visited.add(city);
-
-            for (TeamsPath path : city.getTeamPaths()) {
-                TeamsCity nextCity = teamCityMap.get(path.getPath().getOtherCity(city.getCity()));
-
-                if (!visited.contains(nextCity) && path.getFreeTradeCapacity() > 0) {
-                    queue.add(nextCity);
-                    pathMap.put(nextCity, path);
-
-                    // Wenn die Senke erreicht wurde (Rom), baue den augmentierenden Pfad
-                    if (nextCity.equals(teamsRome)) {
-                        List<TeamsPath> result = new ArrayList<>();
-                        TeamsCity currentCity = nextCity;
-                        while (pathMap.get(currentCity) != null) {
-                            TeamsPath currentPath = pathMap.get(currentCity);
-                            result.add(currentPath);
-                            currentCity = teamCityMap.get(currentPath.getPath().getOtherCity(currentCity.getCity()));
-                        }
-                        Collections.reverse(result);
-                        return result;
-                    }
-                }
-            }
-        }
-
-        return null; // Kein augmentierender Pfad gefunden
-    }
 
     public void addCity(City city) {
         teamCityMap.put(city, new TeamsCity(city));
     }
 
     public void addPath(Path path) {
-        teamPathMap.put(path, new TeamsPath(path));
+        TeamsPath teamsPath = new TeamsPath(path);
+        teamCityMap.get(path.getCity1()).addPath(teamsPath);
+        teamCityMap.get(path.getCity2()).addPath(teamsPath);
+        teamPathMap.put(path, teamsPath);
     }
 
     public void addTradeUnit(Path path, TradeUnit tradeUnit) {
         if (teamPathMap.containsKey(path)) {
             teamPathMap.get(path).addTradeUnit(tradeUnit);
         } else {
-            TeamsPath teamsPath = new TeamsPath(path, tradeUnit);
-            teamCityMap.get(path.getCity1()).addPath(teamsPath);
-            teamCityMap.get(path.getCity2()).addPath(teamsPath);
-            teamPathMap.put(path, teamsPath);
+            addPath(path);
+            teamPathMap.get(path).addTradeUnit(tradeUnit);
         }
     }
 
