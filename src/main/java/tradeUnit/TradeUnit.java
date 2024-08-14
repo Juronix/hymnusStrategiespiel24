@@ -2,8 +2,8 @@ package tradeUnit;
 
 import java.io.Serializable;
 
-import general.Team;
 import path.Path;
+import team.Team;
 
 public abstract class TradeUnit implements Serializable {
 
@@ -11,7 +11,7 @@ public abstract class TradeUnit implements Serializable {
 
     public TradeUnit(Team team, Path path) {
         this.team = team;
-        team.addTradeUnit(this);
+        team.addTradeUnit(path, this);
         path.addTradeUnit(this);
     }
 

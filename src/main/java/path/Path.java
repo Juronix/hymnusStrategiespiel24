@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Set;
 
 import city.City;
-import general.Team;
+import team.Team;
 import tradeUnit.TradeUnit;
 
 public abstract class Path implements Serializable {
-    
+
     private final City city1;
     private final City city2;
 
@@ -54,6 +54,14 @@ public abstract class Path implements Serializable {
 
     public City getCity2() {
         return city2;
+    }
+
+    public City getOtherCity(City city) {
+        if(city.equals(city1)) {
+            return city2;
+        } else {
+            return city1;
+        }
     }
 
     public Set<TradeUnit> getTradeUnits(Team team) {

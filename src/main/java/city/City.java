@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
-import general.Team;
 import path.Path;
+import team.Team;
 
 /**
  * Abstract class representing a City.
@@ -22,12 +24,12 @@ public abstract class City implements Serializable, Comparable<City> {
     private double multiplier = 1.0;
     private Optional<Bonus> optionalBonus;
 
-    private Set<Team> teamsWithTradingPost;
-    private Set<Path> paths;
+    private Set<Team> teamsWithTradingPost = new HashSet<>();
+    private Set<Path> paths = new HashSet<>();
 
     private static City rome;
-    private static Map<String, Integer> idMap;
-    private static Map<Integer, City> cityMap;
+    private static Map<String, Integer> idMap = new HashMap<>();
+    private static Map<Integer, City> cityMap = new HashMap<>();
 
     /**
      * Constructs a City with the specified name and level.
@@ -48,7 +50,7 @@ public abstract class City implements Serializable, Comparable<City> {
         this(name, cityLevel, Optional.empty());
     }
 
-    public void createNewCity(String name, int cityLevel, Optional<Bonus> optionalBonus) {
+    public static void createNewCity(String name, int cityLevel, Optional<Bonus> optionalBonus) {
         switch (cityLevel) {
             case 0:
                 rome = new Rome(name);
@@ -153,6 +155,10 @@ public abstract class City implements Serializable, Comparable<City> {
         return id;
     }
 
+    public Set<Path> getPaths() {
+        return paths;
+    }
+
     public static Map<String, Integer> getIdMap() {
         return idMap;
     }
@@ -169,12 +175,22 @@ public abstract class City implements Serializable, Comparable<City> {
         return cityMap.get(idMap.get(name));
     }
 
-    private int getDistanceToRome() {
+    public int getDistanceToRome() {
         return distanceToRome;
     }
 
     private void setDistanceToRome(int distance) {
         distanceToRome = distance;
+    }
+
+    public static City getRome() {
+        return rome;
+    }
+
+    public static Collection<City> getNonRomeCities() {
+        Set<City> nonRomeCities = new HashSet<>(cityMap.values());
+        nonRomeCities.remove(rome);
+        return nonRomeCities;
     }
 
 }

@@ -1,7 +1,7 @@
 package tradeUnit;
 
-import general.Team;
 import path.Path;
+import team.Team;
 
 public class HorseCart extends LandTradeUnit {
     
