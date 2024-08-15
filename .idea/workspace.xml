@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2e19aa87-cce0-436f-b2bb-94f256c0cf0e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/city/Bonus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/city/City.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/city/CityLvl1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/city/CityLvl2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/city/CityLvl3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/city/Rome.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/Database.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/GenericDataIO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/general/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/path/Path.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/path/Road.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/path/SeaRoute.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/path/Trail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/Team.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/TeamsCity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/TeamsGraph.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/TeamsPath.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/TeamsPathProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/team/TeamsTradeManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/time/GameTime.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/time/GameTimer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/Corbita.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/Donkey.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/HorseCart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/LandTradeUnit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/SeaTradeUnit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/TradeUnit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/Triere.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tradeUnit/bullockCart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/hymnusstrategiespiel24/TeamsGraphTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2khb8kVzRQzPyfA4NTvGBKb8NJB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Mitarbeiter/development/hymnusStrategiespiel24/Backend",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="general.App" />
+      <module name="hymnusStrategiespiel24.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="general.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2e19aa87-cce0-436f-b2bb-94f256c0cf0e" name="Changes" comment="" />
+      <created>1723738598743</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723738598743</updated>
+      <workItem from="1723738600085" duration="2243000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
