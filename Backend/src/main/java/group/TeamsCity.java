@@ -1,4 +1,4 @@
-package team;
+package group;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -8,23 +8,27 @@ import city.City;
 public class TeamsCity {
 
     private final City city;
+    private final int id;
     private final Set<TeamsPath> teamPaths;
     private int distanceToRome = Integer.MAX_VALUE;
     private double capacityUsed = 0.0;
 
-    public TeamsCity(City city, Set<TeamsPath> teamPaths) {
+    public TeamsCity(City city, int id, Set<TeamsPath> teamPaths) {
         this.city = city;
+        this.id = id;
         this.teamPaths = teamPaths;
     }
 
-    public TeamsCity(City city, TeamsPath teamPath) {
+    public TeamsCity(City city, int id, TeamsPath teamPath) {
         this.city = city;
+        this.id = id;
         this.teamPaths = new HashSet<>();
         this.teamPaths.add(teamPath);
     }
 
-    public TeamsCity(City city) {
+    public TeamsCity(City city, int id) {
         this.city = city;
+        this.id = id;
         this.teamPaths = new HashSet<>();
     }
 
@@ -66,6 +70,10 @@ public class TeamsCity {
 
     public void setCapacityUsed(double capacityUsed) {
         this.capacityUsed = capacityUsed;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

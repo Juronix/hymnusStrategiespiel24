@@ -2,8 +2,8 @@ package city;
 
 public class Rome extends City {
 
-    public Rome(String name) {
-        super(name, 0);
+    public Rome(String name, Province province) {
+        super(name, province, 0);
     }
 
     @Override

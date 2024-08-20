@@ -2,15 +2,16 @@ package city;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
+
+import group.Team;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
 import path.Path;
-import team.Team;
 
 /**
  * Abstract class representing a City.
@@ -20,9 +21,10 @@ public abstract class City implements Serializable, Comparable<City> {
     private final String name;
     private final int cityLevel;
     private final int id;
+    private final Province province;
     private int distanceToRome = Integer.MAX_VALUE;
     private double multiplier = 1.0;
-    private Optional<Bonus> optionalBonus;
+    private boolean hasTradeGood;
 
     private Set<Team> teamsWithTradingPost = new HashSet<>();
     private Set<Path> paths = new HashSet<>();
@@ -37,33 +39,31 @@ public abstract class City implements Serializable, Comparable<City> {
      * @param name      the name of the city
      * @param cityLevel the level of the city
      */
-    public City(String name, int cityLevel, Optional<Bonus> optionalBonus) {
+    public City(String name, int cityLevel, Province province, boolean hasTradeGood) {
         this.name = name;
         this.cityLevel = cityLevel;
-        this.optionalBonus = optionalBonus;
+        this.province = province;
+        this.hasTradeGood = hasTradeGood;
         id = idMap.size();
         idMap.put(name, id);
         cityMap.put(id, this);
     }
 
-    public City(String name, int cityLevel) {
-        this(name, cityLevel, Optional.empty());
+    public City(String name, Province province, int cityLevel) {
+        this(name, cityLevel, province, false);
     }
 
-    public static void createNewCity(String name, int cityLevel, Optional<Bonus> optionalBonus) {
+    public static City getNewCity(String name, int cityLevel, Province province, boolean hasTradeGood) {
         switch (cityLevel) {
             case 0:
-                rome = new Rome(name);
-                break;
+                rome = new Rome(name, province);
+                return rome;
             case 1:
-                new CityLvl1(name, optionalBonus);
-                break;
+                return new CityLvl1(name, province, hasTradeGood);
             case 2:
-                new CityLvl2(name, optionalBonus);
-                break;
+                return new CityLvl2(name, province, hasTradeGood);
             case 3:
-                new CityLvl3(name, optionalBonus);
-                break;
+                return new CityLvl3(name, province, hasTradeGood);
             default:
                 throw new IllegalArgumentException("Invalid city level");
         }
@@ -147,8 +147,8 @@ public abstract class City implements Serializable, Comparable<City> {
         return multiplier;
     }
 
-    public Optional<Bonus> getOptionalBonus() {
-        return optionalBonus;
+    public boolean hasTradeGood() {
+        return hasTradeGood;
     }
 
     public int getId() {

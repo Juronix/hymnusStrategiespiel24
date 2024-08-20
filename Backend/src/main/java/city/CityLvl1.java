@@ -8,14 +8,9 @@ public class CityLvl1 extends City {
     private static double capacityNeeded = 100;
 
     
-    public CityLvl1(String name, Optional<Bonus> optionalBonus) {
-        super(name, 1, optionalBonus);
+    public CityLvl1(String name, Province province, boolean hasTradeGood) {
+        super(name, 1, province, hasTradeGood);
     }
-
-    public CityLvl1(String name) {
-        super(name, 1);
-    }
-
 
     @Override
     public double getReputation() {

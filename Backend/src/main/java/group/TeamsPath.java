@@ -1,24 +1,34 @@
-package team;
+package group;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import path.Path;
 import tradeUnit.TradeUnit;
-/* 
-public class TeamsPathProperties {
 
+public class TeamsPath {
+
+    private final Path path;
     private final Set<TradeUnit> tradeUnits;
     private double tradeCapacity;
     private double tradeCapacityUsed;
 
-    public TeamsPathProperties(Set<TradeUnit> tradeUnits) {
+    public TeamsPath(Path path, Set<TradeUnit> tradeUnits) {
+        this.path = path;
         this.tradeUnits = tradeUnits;
         refreshTradeCapacity();
     }
 
-    public TeamsPathProperties(TradeUnit tradeUnit) {
+    public TeamsPath(Path path, TradeUnit tradeUnit) {
+        this.path = path;
         this.tradeUnits = new HashSet<>();
         tradeUnits.add(tradeUnit);
+        refreshTradeCapacity();
+    }
+
+    public TeamsPath(Path path) {
+        this.path = path;
+        this.tradeUnits = new HashSet<>();
         refreshTradeCapacity();
     }
 
@@ -42,12 +52,16 @@ public class TeamsPathProperties {
         return tradeCapacity;
     }
 
-    public double getTradeCapacityUsed() {
+    public double getCapacityUsed() {
         return tradeCapacityUsed;
     }
 
     public double getUtilisation() {
         return tradeCapacityUsed / tradeCapacity;
+    }
+
+    public void setCapacityUsed(double capacityUsed) {
+        tradeCapacityUsed = capacityUsed;
     }
 
     public void increaseCapacityUsed(double capacityNeeded) {
@@ -58,5 +72,8 @@ public class TeamsPathProperties {
         return tradeCapacity - tradeCapacityUsed;
     }
 
+    public Path getPath() {
+        return path;
+    }
+
 }
-*/

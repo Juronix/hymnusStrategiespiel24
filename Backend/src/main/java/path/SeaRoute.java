@@ -1,7 +1,7 @@
 package path;
 
 import city.City;
-import team.Team;
+import group.Team;
 import tradeUnit.SeaTradeUnit;
 import tradeUnit.TradeUnit;
 

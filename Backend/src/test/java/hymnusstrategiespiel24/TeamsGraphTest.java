@@ -3,15 +3,16 @@ package hymnusstrategiespiel24;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import team.Team;
-import team.TeamsCity;
-import team.TeamsGraph;
 import path.Path;
 import path.Road;
 import city.City;
+import city.Province;
+import group.Family;
+import group.Team;
+import group.TeamsCity;
+import group.TeamsGraph;
 import tradeUnit.Donkey;
 
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,19 +24,14 @@ public class TeamsGraphTest {
     @BeforeEach
     public void setup() {
         
+        Province province = new Province("TestProvince");
         
         // Städte erstellen
-        City.createNewCity("Rome", 0, Optional.empty());
-        City.createNewCity("CityA", 1, Optional.empty());
-        City.createNewCity("CityB", 1, Optional.empty());
-        City.createNewCity("CityC", 1, Optional.empty());
-        City.createNewCity("CityD", 1, Optional.empty());
-
-        City rome = City.getCity("Rome");
-        City cityA = City.getCity("CityA");
-        City cityB = City.getCity("CityB");
-        City cityC = City.getCity("CityC");
-        City cityD = City.getCity("CityD");
+        City rome = City.getNewCity("Rome", 0, province, false);
+        City cityA = City.getNewCity("CityA", 1, province, false);
+        City cityB = City.getNewCity("CityB", 1, province, false);
+        City cityC = City.getNewCity("CityC", 1, province, false);
+        City cityD = City.getNewCity("CityD", 1, province, false);
 
         // Pfade hinzufügen
         Path pathRA = new Road(rome, cityA);
@@ -44,7 +40,9 @@ public class TeamsGraphTest {
         Path pathCD = new Road(cityC, cityD);
         Path pathDR = new Road(cityD, rome);
 
-        team = new Team("TestTeam");
+        Family family = new Family("TestFamily");
+
+        team = new Team("TestTeam", family);
         teamsGraph = team.getTeamsGraph();
 
         // Handelsposten erstellen 

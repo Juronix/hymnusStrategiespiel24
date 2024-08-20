@@ -1,4 +1,4 @@
-package team;
+package group;
 
 import java.io.Serializable;
 
@@ -9,13 +9,17 @@ import tradeUnit.TradeUnit;
 public class Team implements Serializable {
     
     private String name;
+    private Family family;
+    private double hymnen;
     private double reputation = 0.0;
-    private double reputationMultiplier = 1.0;
+    private double additionalReputationMultiplier = 1.0;
     
     private TeamsGraph teamsGraph;
 
-    public Team(String name) {
+    public Team(String name, Family family) {
         this.name = name;
+        this.family = family;
+        family.addTeam(this);
         this.teamsGraph = new TeamsGraph();
         City.getRome().addTradePost(this);
     }
@@ -51,18 +55,37 @@ public class Team implements Serializable {
         return reputation;
     }
 
-    public double getReputationMultiplier() {
-        return reputationMultiplier;
+    public void setReputation(double reputation) {
+        this.reputation = reputation;
     }
 
-    public void setReputationMultiplier(double reputationMultiplier) {
-        this.reputationMultiplier = reputationMultiplier;
+    public double getAdditionalReputationMultiplier() {
+        return additionalReputationMultiplier;
+    }
+
+    public void setAdditionalReputationMultiplier(double additionalReputationMultiplier) {
+        this.additionalReputationMultiplier = additionalReputationMultiplier;
+    }
+
+    public double getReputationMultiplier(){
+        //TODO add senat
+        return additionalReputationMultiplier;
     }
 
     public TeamsGraph getTeamsGraph() {
         return teamsGraph;
     }
 
+    public Family getFamily() {
+        return family;
+    }
 
+    public double getHymnen() {
+        return hymnen;
+    }
+
+    public void setHymnen(double hymnen) {
+        this.hymnen = hymnen;
+    }
 
 }

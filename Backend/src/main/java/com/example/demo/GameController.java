@@ -17,17 +17,17 @@ public class GameController {
     //Example usage
     @GetMapping("/time")
     public GameTime time() {
-        return game.time;
+        return game.getTime();
     }
 
     @GetMapping("/test")
     public GameTime test(@RequestParam(value = "gamespeed") String gamespeed) {
-        game.time.setGameSpeed(Float.parseFloat(gamespeed));
-        return game.time;
+        game.getTime().setGameSpeed(Float.parseFloat(gamespeed));
+        return game.getTime();
     }
 
     @PostMapping("/settime")
     public void setTime(){
-        game.time.setMinutesPlayed(game.time.getMinutesPlayed() +5);
+        game.getTime().setMinutesPlayed(game.getTime().getMinutesPlayed() +5);
     }
 }

@@ -1,7 +1,7 @@
 package tradeUnit;
 
+import group.Team;
 import path.Path;
-import team.Team;
 
 public class Corbita extends SeaTradeUnit {
     

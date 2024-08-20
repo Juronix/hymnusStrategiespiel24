@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import city.City;
-import team.Team;
+import group.Team;
 import tradeUnit.TradeUnit;
 
 public abstract class Path implements Serializable {
@@ -22,6 +22,16 @@ public abstract class Path implements Serializable {
         this.city2 = city2;
         city1.addPath(this);
         city2.addPath(this);
+    }
+
+    public static Path getNewPath(City city1, City city2, boolean isSeaRoute, boolean isTrail) {
+        if(isSeaRoute) {
+            return new SeaRoute(city1, city2);
+        } else if(isTrail) {
+            return new Trail(city1, city2);
+        } else {
+            return new Road(city1, city2);
+        }
     }
 
     public abstract boolean canPass(TradeUnit tradeUnit);
