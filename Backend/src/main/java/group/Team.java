@@ -9,7 +9,7 @@ import tradeUnit.TradeUnit;
 public class Team implements Serializable {
     
     private String name;
-    private Family family;
+    // private Family family;
     private double hymnen;
     private double reputation = 0.0;
     private double additionalReputationMultiplier = 1.0;
@@ -18,7 +18,7 @@ public class Team implements Serializable {
 
     public Team(String name, Family family) {
         this.name = name;
-        this.family = family;
+        // this.family = family;
         family.addTeam(this);
         this.teamsGraph = new TeamsGraph();
         City.getRome().addTradePost(this);
@@ -76,9 +76,9 @@ public class Team implements Serializable {
         return teamsGraph;
     }
 
-    public Family getFamily() {
-        return family;
-    }
+    //public Family getFamily() {
+    //    return family;
+    //}
 
     public double getHymnen() {
         return hymnen;

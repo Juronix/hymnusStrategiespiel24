@@ -1,5 +1,5 @@
 ﻿Name;Level;Provinz;Handelsware
-Roma;3;Imperium Romanum;
+Roma;0;Imperium Romanum;
 Napoli;2;Imperium Romanum;
 Velathri;1;Imperium Romanum;Esel
 Ariminum;1;Imperium Romanum;Esel
@@ -39,7 +39,7 @@ Hierapythna;1;Achaia;Marmor
 Alexandria;3;Aegyptus;
 Memphis;1;Aegyptus;
 Myos Hormos;1;Aegyptus;Seide
-Petr;3;Aegyptus;
+Petra;3;Aegyptus;
 Jerusalem;2;Judea;
 Palmyra;2;Judea;Weihrauch
 Tyros;1;Judea;

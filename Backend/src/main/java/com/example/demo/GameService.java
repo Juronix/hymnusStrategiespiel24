@@ -71,6 +71,10 @@ public class GameService {
                 City city1Obj = cityMap.get(city1);
                 City city2Obj = cityMap.get(city2);
 
+                if (city2Obj == null) {
+                    throw new IllegalArgumentException("City2Obi is null: " + city2);
+                }
+
                 Path.getNewPath(city1Obj, city2Obj, isSeaRoute, isTrail);
             }
         }

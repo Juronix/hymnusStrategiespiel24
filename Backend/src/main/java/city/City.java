@@ -13,6 +13,8 @@ import java.util.PriorityQueue;
 
 import path.Path;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Abstract class representing a City.
  * Provides a template for city-level specific implementations.
@@ -27,6 +29,7 @@ public abstract class City implements Serializable, Comparable<City> {
     private boolean hasTradeGood;
 
     private Set<Team> teamsWithTradingPost = new HashSet<>();
+    @JsonIgnore
     private Set<Path> paths = new HashSet<>();
 
     private static City rome;
