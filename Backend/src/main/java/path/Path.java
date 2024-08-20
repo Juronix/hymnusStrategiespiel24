@@ -18,6 +18,9 @@ public abstract class Path implements Serializable {
     private final Map<Team, Set<TradeUnit>> tradeUnitTeamMap = new HashMap<>();
 
     public Path(City city1, City city2) {
+        if(city2 == null){
+            System.out.println(city1);
+        }
         this.city1 = city1;
         this.city2 = city2;
         city1.addPath(this);
