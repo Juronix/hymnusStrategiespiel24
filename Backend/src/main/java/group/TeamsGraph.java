@@ -53,8 +53,8 @@ public class TeamsGraph {
     public double calculateMaxFlowToRome() {
 
         double maxFlow = 0;
-        final int source = 0;
-        final int sink = teamCityMap.size();
+        final int source = teamCityMap.size();
+        final int sink = 0;
         double rGraph[][] = new double[teamCityMap.size() + 1][teamCityMap.size() + 1];
         int parent[] = new int[teamCityMap.size() + 1];
 
@@ -75,7 +75,7 @@ public class TeamsGraph {
         teamCityMap.values().forEach(teamsCity -> {
             if (teamsCity != teamsRome) {
                 int id = teamsCity.getId();
-                rGraph[sink][id] = teamsCity.getCity().getCapacityNeeded();
+                rGraph[source][id] = teamsCity.getCity().getCapacityNeeded();
             }
         });
 

@@ -2,6 +2,8 @@ package group;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import city.City;
 import path.Path;
 import tradeUnit.TradeUnit;
@@ -9,7 +11,8 @@ import tradeUnit.TradeUnit;
 public class Team implements Serializable {
     
     private String name;
-    // private Family family;
+    @JsonIgnore
+    private Family family;
     private double hymnen;
     private double reputation = 0.0;
     private double additionalReputationMultiplier = 1.0;
@@ -18,7 +21,7 @@ public class Team implements Serializable {
 
     public Team(String name, Family family) {
         this.name = name;
-        // this.family = family;
+        this.family = family;
         family.addTeam(this);
         this.teamsGraph = new TeamsGraph();
         City.getRome().addTradePost(this);

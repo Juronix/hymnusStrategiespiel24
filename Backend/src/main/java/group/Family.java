@@ -7,6 +7,7 @@ public class Family {
 
     private String name;
     private double additionalReputation = 0.0;
+    
     private Set<Team> teams = new HashSet<>();
 
     public Family(String name) {

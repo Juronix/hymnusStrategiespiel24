@@ -96,6 +96,7 @@ public class GameService {
                 i++;
             }
         }
+        //TODO create Senat
     }
 
 
