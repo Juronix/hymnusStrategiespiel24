@@ -3,11 +3,13 @@ package group;
 import java.util.*;
 
 import city.City;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import path.Path;
 import tradeUnit.TradeUnit;
 
 public class TeamsGraph {
 
+    @JsonIgnore
     private final TeamsCity teamsRome;
     private final Map<City, TeamsCity> teamCityMap;
     private final Map<Path, TeamsPath> teamPathMap;
