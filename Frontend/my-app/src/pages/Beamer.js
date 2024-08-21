@@ -1,82 +1,87 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import React, { useEffect, useState } from 'react';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+function Beamer() {
+  const [families, setFamilies] = useState([]);
 
-const Beamer = () => {
-  // Beispielhafte Daten für die Familien und Teams
-  const families = ['Familie A', 'Familie B', 'Familie C', 'Familie D', 'Familie E', 'Familie F', 'Familie G', 'Familie H', 'Familie I'];
-  const teams = [
-    'Team A1', 'Team A2', 'Team A3',
-    'Team B1', 'Team B2', 'Team B3',
-    'Team C1', 'Team C2', 'Team C3',
-    'Team D1', 'Team D2', 'Team D3',
-    'Team E1', 'Team E2', 'Team E3',
-    'Team F1', 'Team F2', 'Team F3',
-    'Team G1', 'Team G2', 'Team G3',
-    'Team H1', 'Team H2', 'Team H3',
-    'Team I1', 'Team I2', 'Team I3'
-  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetch('http://localhost:8080/getFamilies')
+        .then(response => response.json())
+        .then(data => {
+          console.log('Daten aktualisiert:', data);
+          setFamilies(data);
+        })
+        .catch(error => console.error('Fehler beim Abrufen der Daten:', error));
+    }, 5000); // Alle 5 Sekunden
+  
+    return () => clearInterval(interval);
+  }, []);
 
-  // Beispielhafte Daten für das Ansehen der Teams und Familien
-  const teamReputation = [
-    45, 56, 72,  // Familie A
-    33, 49, 64,  // Familie B
-    50, 61, 70,  // Familie C
-    44, 57, 66,  // Familie D
-    38, 60, 74,  // Familie E
-    47, 55, 69,  // Familie F
-    43, 52, 67,  // Familie G
-    46, 53, 62,  // Familie H
-    40, 54, 65   // Familie I
-  ];
+    // Funktion zur Berechnung des Gesamteinflusses einer Familie
+    const calculateInfluence = (family) => {
+      const teamReputationSum = family.teams.reduce((acc, team) => acc + team.reputation, 0);
+      return teamReputationSum + family.additionalReputation;
+    };
 
-  const familyReputation = families.map((_, index) => {
-    const startIndex = index * 3;
-    return teamReputation[startIndex] + teamReputation[startIndex + 1] + teamReputation[startIndex + 2];
-  });
-
-  // Daten für das Diagramm
-  const data = {
-    labels: [...teams, ...families],
-    datasets: [
-      {
-        label: 'Ansehen der Teams',
-        data: [...teamReputation, ...new Array(9).fill(0)], // Teams mit Ansehen
-        backgroundColor: 'rgba(75,192,192,0.6)',
-      },
-      {
-        label: 'Ansehen der Familien',
-        data: [...new Array(27).fill(0), ...familyReputation], // Familien mit Ansehen
-        backgroundColor: 'rgba(153,102,255,0.6)',
-      },
-    ],
-  };
-
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Ansehen der Teams und Familien',
-      },
-    },
-  };
+    const colors = ['#4caf50', '#ff9800', '#2196f3', '#9c27b0', '#f44336', '#00bcd4'];
 
   return (
     <div>
-      <h1>Beamer: Übersicht der Familien und Teams</h1>
-      <Bar data={data} options={options} />
+      <h1>Families Influence Overview</h1>
+      {families.length > 0 ? (
+        families.map((family, index) => {
+          const influence = calculateInfluence(family);
+          return (
+            <div key={index} style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc' }}>
+              <h2>{family.name}</h2>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ width: '200px' }}>Influence: {influence.toFixed(2)}</div>
+                <div style={{ width: '100%', backgroundColor: '#eee', marginLeft: '10px', display: 'flex' }}>
+                  {family.teams.map((team, idx) => {
+                    const teamInfluence = team.reputation;
+                    const teamWidth = (teamInfluence / influence) * 100;
+                    return (
+                      <div
+                        key={idx}
+                        style={{
+                          width: `${teamWidth}%`,
+                          backgroundColor: colors[idx % colors.length],
+                          padding: '5px',
+                          color: 'white',
+                          textAlign: 'center',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {teamInfluence.toFixed(2)}
+                      </div>
+                    );
+                  })}
+                  <div
+                    style={{
+                      width: `${(family.additionalReputation / influence) * 100}%`,
+                      backgroundColor: '#607d8b',
+                      padding: '5px',
+                      color: 'white',
+                      textAlign: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    +{family.additionalReputation.toFixed(2)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <p>Loading families...</p>
+      )}
     </div>
   );
-};
+}
 
 export default Beamer;

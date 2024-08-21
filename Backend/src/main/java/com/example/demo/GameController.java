@@ -40,6 +40,18 @@ public class GameController {
         return game.getFamilies();
     }
 
+    @PostMapping("/testInfluence")
+    public void testInfluence(){
+        double add = 1.0;
+        for (Family family : game.getFamilies()) {
+            family.setAdditionalReputation(add++);
+            for (Team team : family.getTeams()) {
+                team.setReputation(add++);
+            }
+        }
+    }
+
+
     @PostMapping("/setup")
     public void setup(){
         game.createCitiesAndPaths();

@@ -79,10 +79,6 @@ public class Team implements Serializable {
         return teamsGraph;
     }
 
-    //public Family getFamily() {
-    //    return family;
-    //}
-
     public double getHymnen() {
         return hymnen;
     }
