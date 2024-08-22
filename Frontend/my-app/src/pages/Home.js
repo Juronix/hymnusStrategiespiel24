@@ -8,6 +8,7 @@ function Home() {
       <h1>pages</h1>
       <li><Link to="/beamer">Beamer</Link></li>
       <li><Link to="/teams">Teams</Link></li>
+      <li><Link to="/centralhub">CentralHub</Link></li>
       <h1>functions</h1>
       <SetupButton />
 
