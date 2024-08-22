@@ -113,6 +113,31 @@ public class GameService {
         return families;
     }
 
+    public boolean changeTeamName(String oldName, String newName) {
+        System.out.println(oldName);
+        System.out.println(newName);
+        // Beispielhafte Logik zur Änderung des Teamnamens
+        //Team team = teamRepository.findByName(oldName);
+       // if (team != null) {
+        //    team.setName(newName);
+        //    teamRepository.save(team);
+            return true;
+        //} else {
+         //   return false;
+       // }
+    }
+
+    public boolean addReputation(String teamName, double reputationAmount) {
+//        Team team = teamRepository.findByName(teamName);
+//        if (team != null) {
+//            team.setReputation(team.getReputation() + reputationAmount);
+//            teamRepository.save(team);
+            return true;
+//        } else {
+//            return false;
+//        }
+    }
+
     
     
 }
