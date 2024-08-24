@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 function CentralTeams() {
   const [families, setFamilies] = useState([]);
-  const [cities, setCities] = useState([]);
   const [newTeamNames, setNewTeamNames] = useState({});
   const [reputation, setReputation] = useState({});
   const [reputationMultiplier, setReputationMultiplier] = useState({});
@@ -16,24 +15,13 @@ function CentralTeams() {
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setFamilies(data);
+        
       } catch (error) {
         console.error('Error fetching families:', error);
       }
     };
 
-    const fetchCities = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/getCities');
-        if (!response.ok) throw new Error('Failed to fetch cities data');
-        const citiesData = await response.json();
-        setCities(citiesData);
-      } catch (error) {
-        console.error('Error fetching cities:', error);
-      }
-    };
-
     fetchFamilies();
-    fetchCities();
 
     const interval = setInterval(() => {
       fetchFamilies();
@@ -72,16 +60,17 @@ function CentralTeams() {
     }
   };
 
-  const handleReputationMultiplier = async (teamName) => {
+  const handleReputationMultiplier = async (id) => {
     try {
       await fetch('http://localhost:8080/setReputationMultiplier', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ teamName, multiplier: reputationMultiplier[teamName] }),
+        body: JSON.stringify({ id, multiplier: reputationMultiplier[id] }),
       });
-      setReputationMultiplier({ ...reputationMultiplier, [teamName]: 1 });
+      console.log(...reputationMultiplier);
+      setReputationMultiplier({ ...reputationMultiplier, [id]: 0 });
     } catch (error) {
       console.error('Error setting reputation multiplier:', error);
     }
@@ -116,14 +105,14 @@ function CentralTeams() {
     }
   };
 
-  const handleResetHymns = async (teamName) => {
+  const handleResetHymns = async (id) => {
     try {
       await fetch('http://localhost:8080/resetHymnen', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ teamName }),
+        body: JSON.stringify({ id }),
       });
     } catch (error) {
       console.error('Error resetting hymns:', error);
@@ -167,15 +156,15 @@ function CentralTeams() {
             {/* Set Reputation Multiplier */}
             <div>
               <label>
-                Reputation Multiplier:
+                <div>Reputation Multiplier: {team.additionalReputationMultiplier} </div>
                 <input
                   type="number"
-                  value={reputationMultiplier[team.name] || 1}
+                  value={reputationMultiplier[team.id]}
                   onChange={(e) =>
-                    setReputationMultiplier({ ...reputationMultiplier, [team.name]: parseFloat(e.target.value) })
+                    setReputationMultiplier({ ...reputationMultiplier, [team.id]: parseFloat(e.target.value) })
                   }
                 />
-                <button onClick={() => handleReputationMultiplier(team.name)}>Set Multiplier</button>
+                <button onClick={() => handleReputationMultiplier(team.id)}>Set Multiplier</button>
               </label>
             </div>
 
@@ -202,22 +191,11 @@ function CentralTeams() {
               )}
             </div>
 
-            {/* Build Trade Post */}
-            <div>
-              <h3>Build Trade Post</h3>
-              {cities.map((city) => (
-                <div key={city.id}>
-                  <span>{city.name}</span>
-                  <button onClick={() => handleBuildTradePost(team.name, city.id)}>Build Trade Post</button>
-                </div>
-              ))}
-            </div>
-
             {/* Hymns Reset */}
             <div>
               <h3>Hymns</h3>
               <span>Ready Hymns: {team.hymnen}</span>
-              <button onClick={() => handleResetHymns(team.name)}>Reset Hymns</button>
+              <button onClick={() => handleResetHymns(team.id)}>Reset Hymns</button>
             </div>
           </div>
         ))
