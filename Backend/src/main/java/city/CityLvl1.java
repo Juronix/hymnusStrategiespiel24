@@ -1,6 +1,5 @@
 package city;
 
-import java.util.Optional;
 
 public class CityLvl1 extends City {
 
@@ -8,8 +7,8 @@ public class CityLvl1 extends City {
     private static double capacityNeeded = 100;
 
     
-    public CityLvl1(String name, Province province, boolean hasTradeGood) {
-        super(name, 1, province, hasTradeGood);
+    public CityLvl1(String name, int id, Province province, boolean hasTradeGood) {
+        super(name,  id, 1, province, hasTradeGood);
     }
 
     @Override

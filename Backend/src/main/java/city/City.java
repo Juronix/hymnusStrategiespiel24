@@ -1,13 +1,10 @@
 package city;
 
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Set;
 
 import group.Team;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -32,41 +29,34 @@ public abstract class City implements Serializable, Comparable<City> {
     @JsonIgnore
     private Set<Path> paths = new HashSet<>();
 
-    private static City rome;
-    private static Map<String, Integer> idMap = new HashMap<>();
-    private static Map<Integer, City> cityMap = new HashMap<>();
-
     /**
      * Constructs a City with the specified name and level.
      *
      * @param name      the name of the city
      * @param cityLevel the level of the city
      */
-    public City(String name, int cityLevel, Province province, boolean hasTradeGood) {
+    public City(String name, int id, int cityLevel, Province province, boolean hasTradeGood) {
         this.name = name;
         this.cityLevel = cityLevel;
         this.province = province;
         this.hasTradeGood = hasTradeGood;
-        id = idMap.size();
-        idMap.put(name, id);
-        cityMap.put(id, this);
+        this.id = id;
     }
 
-    public City(String name, Province province, int cityLevel) {
-        this(name, cityLevel, province, false);
+    public City(String name, int id, Province province, int cityLevel) {
+        this(name, id, cityLevel, province, false);
     }
 
-    public static City getNewCity(String name, int cityLevel, Province province, boolean hasTradeGood) {
+    public static City getNewCity(String name, int id, int cityLevel, Province province, boolean hasTradeGood) {
         switch (cityLevel) {
             case 0:
-                rome = new Rome(name, province);
-                return rome;
+                return new Rome(name, id, province);
             case 1:
-                return new CityLvl1(name, province, hasTradeGood);
+                return new CityLvl1(name, id, province, hasTradeGood);
             case 2:
-                return new CityLvl2(name, province, hasTradeGood);
+                return new CityLvl2(name, id, province, hasTradeGood);
             case 3:
-                return new CityLvl3(name, province, hasTradeGood);
+                return new CityLvl3(name, id, province, hasTradeGood);
             default:
                 throw new IllegalArgumentException("Invalid city level");
         }
@@ -86,10 +76,10 @@ public abstract class City implements Serializable, Comparable<City> {
         }
     }
 
-    public static void refreshDistancesToRome() {
+    public static void refreshDistancesToRome(Set<City> cities, City rome) {
         PriorityQueue<City> cityQueue = new PriorityQueue<City>(
                 (d1, d2) -> Integer.compare(d1.getDistanceToRome(), d2.getDistanceToRome()));
-        cityMap.values().forEach(city -> city.distanceToRome = Integer.MAX_VALUE);
+        cities.forEach(city -> city.distanceToRome = Integer.MAX_VALUE);
         rome.setDistanceToRome(0);
         cityQueue.add(rome);
 
@@ -123,7 +113,7 @@ public abstract class City implements Serializable, Comparable<City> {
      * 
      */
     public double getReputationForTrade(Team team, double capacityUsed, double reputationMultiplier) {
-        return 0;
+        return 0; //TODO
     };
 
     public void addPath(Path path) {
@@ -162,22 +152,6 @@ public abstract class City implements Serializable, Comparable<City> {
         return paths;
     }
 
-    public static Map<String, Integer> getIdMap() {
-        return idMap;
-    }
-
-    public static int getId(String name) {
-        return idMap.get(name);
-    }
-
-    public static City getCity(int id) {
-        return cityMap.get(id);
-    }
-
-    public static City getCity(String name) {
-        return cityMap.get(idMap.get(name));
-    }
-
     public int getDistanceToRome() {
         return distanceToRome;
     }
@@ -186,14 +160,8 @@ public abstract class City implements Serializable, Comparable<City> {
         distanceToRome = distance;
     }
 
-    public static City getRome() {
-        return rome;
-    }
-
-    public static Collection<City> getNonRomeCities() {
-        Set<City> nonRomeCities = new HashSet<>(cityMap.values());
-        nonRomeCities.remove(rome);
-        return nonRomeCities;
+    public Province getProvince() {
+        return province;
     }
 
 }

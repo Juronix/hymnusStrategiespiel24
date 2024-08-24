@@ -1,7 +1,11 @@
 package group;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Senate {
 
+    public List<String> nameList = new ArrayList<String>();
     private Family familyOfPolitician1;
     private Family familyOfPolitician2;
     private Family familyOfPolitician3;
@@ -10,6 +14,17 @@ public class Senate {
     private Family familyOfPolitician6;
     private Family familyOfPolitician7;
     private Family familyOfPolitician8;
+
+    public Senate() {
+        nameList.add("Marcus Licinius Crassus");
+        nameList.add("Augustus");
+        nameList.add("Gnaeus Pompeius Magnus");
+        nameList.add("Lucius Cornelius Sulla");
+        nameList.add("Marcus Agrippa");
+        nameList.add("Gaius Maecenas");
+        nameList.add("Marecus Aemilius Lepidus");
+        nameList.add("Tiberius Gracchus");
+    }
 
     public void setFamilyOfPolitician1(Family familyOfPolitician1) {  // Marcus Licinius Crassus, +20% Hymnen
         this.familyOfPolitician1 = familyOfPolitician1;

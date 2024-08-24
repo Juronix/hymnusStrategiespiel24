@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import time.GameTime;
 
 import java.util.Set;
+import java.util.Collection;
 
 @RestController
 public class GameController {
@@ -22,18 +23,18 @@ public class GameController {
     //Example usage
     @GetMapping("/time")
     public GameTime time() {
-        return game.getTime();
+        return game.getGameTime();
     }
 
     @GetMapping("/test")
     public GameTime test(@RequestParam(value = "gamespeed") String gamespeed) {
-        game.getTime().setGameSpeed(Float.parseFloat(gamespeed));
-        return game.getTime();
+        game.getGameTime().setGameSpeed(Float.parseFloat(gamespeed));
+        return game.getGameTime();
     }
 
     @PostMapping("/settime")
     public void setTime(){
-        game.getTime().setMinutesPlayed(game.getTime().getMinutesPlayed() +5);
+        game.getGameTime().setMinutesPlayed(game.getGameTime().getMinutesPlayed() +5);
     }
 
     @GetMapping("/getFamilies")
@@ -54,7 +55,7 @@ public class GameController {
 
 
     @GetMapping("/getCities")
-    public Set<City> getCities() {
+    public Collection<City> getCities() {
         return game.getCities();
     }
 
@@ -107,8 +108,9 @@ public class GameController {
 
     @PostMapping("/setup")
     public void setup(){
-        game.createCitiesAndPaths();
-        game.createTeamsAndFamilies();
+        game.setupGame();
     }
+
+    //TODO get Cities possible
 
 }

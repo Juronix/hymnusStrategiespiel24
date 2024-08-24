@@ -1,5 +1,8 @@
 package hymnusstrategiespiel24;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +30,19 @@ public class TeamsGraphTest {
         Province province = new Province("TestProvince");
         
         // Städte erstellen
-        City rome = City.getNewCity("Rome", 0, province, false);
-        City cityA = City.getNewCity("CityA", 1, province, false);
-        City cityB = City.getNewCity("CityB", 1, province, false);
-        City cityC = City.getNewCity("CityC", 1, province, false);
-        City cityD = City.getNewCity("CityD", 1, province, false);
+        City rome = City.getNewCity("Rome", 0, 0, province, false);
+        City cityA = City.getNewCity("CityA", 1, 1, province, false);
+        City cityB = City.getNewCity("CityB", 2, 1, province, false);
+        City cityC = City.getNewCity("CityC", 3, 1, province, false);
+        City cityD = City.getNewCity("CityD", 4, 1, province, false);
+
+        Set<City> cities = new HashSet<>();
+        cities.add(rome);
+        cities.add(cityA);
+        cities.add(cityB);
+        cities.add(cityC);
+        cities.add(cityD);
+
 
         // Pfade hinzufügen
         Path pathRA = new Road(rome, cityA);
@@ -58,7 +69,7 @@ public class TeamsGraphTest {
         new Donkey(team, pathCD);
         new Donkey(team, pathDR);
 
-        City.refreshDistancesToRome();
+        City.refreshDistancesToRome(cities, rome);
         teamsGraph.refreshDistancesToRome();
 
         teamsGraph.setRomeTo0();
