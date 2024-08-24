@@ -60,7 +60,7 @@ public class GameController {
 
     @PostMapping("/setTeamName")
     public ResponseEntity<String> changeTeamName(@RequestBody TeamNameChangeRequest request) {
-        boolean success = game.changeTeamName(request.getOldName(), request.getNewName());
+        boolean success = game.changeTeamName(request.getId(), request.getNewName());
 
         if (success) {
             return ResponseEntity.ok("Team name updated successfully");
@@ -71,7 +71,7 @@ public class GameController {
 
     @PostMapping("/addReputation")
     public ResponseEntity<String> addReputation(@RequestBody AddReputationRequest request) {
-        boolean success = game.addReputation(request.getTeamName(), request.getReputationAmount());
+        boolean success = game.addReputation(request.getId(), request.getReputation());
 
         if (success) {
             return ResponseEntity.ok("Reputation added successfully");

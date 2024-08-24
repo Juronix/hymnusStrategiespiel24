@@ -92,7 +92,7 @@ public class GameService {
         int i = 0;
         for (Family family : families) {
             for (int j = 0; j < 3; j++) {
-                new Team("Team " + i, family);
+                new Team(i, "Team " + i, family);
                 i++;
             }
         }
@@ -113,29 +113,36 @@ public class GameService {
         return families;
     }
 
-    public boolean changeTeamName(String oldName, String newName) {
-        System.out.println(oldName);
-        System.out.println(newName);
-        // Beispielhafte Logik zur Änderung des Teamnamens
-        //Team team = teamRepository.findByName(oldName);
-       // if (team != null) {
-        //    team.setName(newName);
-        //    teamRepository.save(team);
+    public boolean changeTeamName(int id, String newName) {
+        Team team = this.getTeamById(id);
+        if (team != null) {
+            team.setName(newName);
             return true;
-        //} else {
-         //   return false;
-       // }
+        } else {
+            return false;
+        }
     }
 
-    public boolean addReputation(String teamName, double reputationAmount) {
-//        Team team = teamRepository.findByName(teamName);
-//        if (team != null) {
-//            team.setReputation(team.getReputation() + reputationAmount);
-//            teamRepository.save(team);
+    private Team getTeamById(int id){
+        for(Family family : families) {
+            for (Team team : family.getTeams()) {
+                if(team.getId() == id){
+                    return team;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean addReputation(int id, double reputation) {
+        System.out.println(reputation);
+        Team team = this.getTeamById(id);
+        if (team != null) {
+            team.addReputation(reputation);
             return true;
-//        } else {
-//            return false;
-//        }
+        } else {
+            return false;
+        }
     }
 
     
