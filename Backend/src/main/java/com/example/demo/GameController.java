@@ -4,7 +4,9 @@ import city.City;
 import database.Database;
 
 import com.example.demo.dto.AddReputationRequest;
+import com.example.demo.dto.SetReputationMultiplier;
 import com.example.demo.dto.TeamNameChangeRequest;
+import com.example.demo.dto.ResetHymnenRequest;
 import group.Family;
 import group.Team;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,26 @@ public class GameController {
         }
     }
 
+    @PostMapping("/testhymnen")
+    public void testHymnen(){
+        double add = 1.0;
+        for (Family family : game.getFamilies()) {
+            for (Team team : family.getTeams()) {
+                team.setHymnen(add++);
+            }
+        }
+    }
+
+    @PostMapping("/resetHymnen")
+    public ResponseEntity<String> resetHymnen(@RequestBody ResetHymnenRequest request){
+        boolean success = game.resetHymnen(request.getId());
+
+        if (success) {
+            return ResponseEntity.ok("Team name updated successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to update team name");
+        }
+    }
 
     @GetMapping("/getCities")
     public Collection<City> getCities() {
@@ -88,9 +110,14 @@ public class GameController {
     }
 
     @PostMapping("/setReputationMultiplier")
-    public void setReputationMultiplier(@RequestParam(value = "teamName") String teamName, @RequestParam(value = "multiplier") String multiplier ){
-        System.out.println(teamName);
-        System.out.println(multiplier);
+    public ResponseEntity<String> setReputationMultiplier(@RequestBody SetReputationMultiplier request){
+        boolean success = game.setMultiplier(request.getId(), request.getMultiplier());
+
+        if (success) {
+            return ResponseEntity.ok("SetReputationMultiplier successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to set reputation multiplier");
+        }
     }
 
     @PostMapping("/setPath")

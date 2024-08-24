@@ -168,6 +168,27 @@ public class GameService {
         }
     }
 
+    public boolean setMultiplier(int id, double multiplier) {
+        Team team = this.getTeamById(id);
+        if (team != null) {
+            team.setAdditionalReputationMultiplier(multiplier);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean resetHymnen(int id) {
+        Team team = this.getTeamById(id);
+        if (team != null) {
+            team.setHymnen(0);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public GameTime getGameTime() {
         return time;
     }
