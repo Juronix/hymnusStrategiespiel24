@@ -53,7 +53,7 @@ public class TeamsGraphTest {
 
         Family family = new Family("TestFamily");
 
-        team = new Team(1,"TestTeam", family);
+        team = new Team("TestTeam", 1, family, rome);
         teamsGraph = team.getTeamsGraph();
 
         // Handelsposten erstellen 

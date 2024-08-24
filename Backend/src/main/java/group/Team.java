@@ -19,7 +19,7 @@ public class Team implements Serializable {
     
     private TeamsGraph teamsGraph;
 
-    public Team(int id, String name, Family family) {
+    public Team(String name, int id, Family family, City rome) {
         this.id = id;
         this.name = name;
         this.family = family;

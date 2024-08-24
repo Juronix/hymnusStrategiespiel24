@@ -124,7 +124,7 @@ public class GameService {
         int i = 0;
         for (Family family : families) {
             for (int j = 0; j < 3; j++) {
-                new Team(i, "Team " + i, family);
+                new Team("Team " + i, i, family, rome);
                 i++;
             }
         }
@@ -134,14 +134,6 @@ public class GameService {
 
     public GameTime getTime() {
         return time;
-    }
-
-    public Set<City> getCities() {
-        return cities;
-    }
-
-    public Set<Family> getFamilies() {
-        return families;
     }
 
     public boolean changeTeamName(int id, String newName) {
