@@ -1,6 +1,7 @@
 package group;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,8 +38,8 @@ public class Team implements Serializable {
     }
 
 
-    public void giveReputationForTrade() {
-        teamsGraph.giveReputationForTrade();
+    public void giveReputationForTrade(Map<Integer, City> cityMap) {
+        teamsGraph.giveReputationForTrade(cityMap);
     }
 
     public void giveHymnenForTrade() {

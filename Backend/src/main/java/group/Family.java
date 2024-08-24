@@ -1,7 +1,10 @@
 package group;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import city.City;
 
 public class Family {
 
@@ -14,9 +17,9 @@ public class Family {
         this.name = name;
     }
 
-    public void giveReputationForTrade(){
+    public void giveReputationForTrade(Map<Integer, City> cityMap) {
         for (Team team : teams) {
-            team.giveReputationForTrade();
+            team.giveReputationForTrade(cityMap);
         }
     }
 

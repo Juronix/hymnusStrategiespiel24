@@ -4,7 +4,7 @@ package city;
 public class CityLvl3 extends City {
 
     private static final double reputation = 100;
-    private static final double capacityNeeded = 100;
+    private static final double capacityNeeded = 5.0/3.0;
 
     
     public CityLvl3(String name, int id, Province province, boolean hasTradeGood) {

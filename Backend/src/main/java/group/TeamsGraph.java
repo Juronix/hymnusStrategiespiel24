@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import city.City;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import path.Path;
 import path.Road;
@@ -30,10 +31,9 @@ public class TeamsGraph {
         teamCityMap.put(teamsRome.getCity(), teamsRome);
     }
 
-    public void giveReputationForTrade() {
+    public void giveReputationForTrade(Map<Integer, City> cityMap) {
         if(isTradeUnitAdded){
-            refreshDistancesToRome();
-            calculateMaxFlowToRome();
+            calculateMaxFlowToRome(cityMap);
         } else {
 
         }
@@ -81,34 +81,7 @@ public class TeamsGraph {
             .collect(Collectors.toList());
     }
 
-    public void refreshDistancesToRome() {
-        PriorityQueue<TeamsCity> cityQueue = new PriorityQueue<>(
-                Comparator.comparingInt(TeamsCity::getDistanceToRome));
-        teamsRome.setDistanceToRome(0);
-        cityQueue.add(teamsRome);
-
-        Set<TeamsCity> searchDone = new HashSet<>();
-
-        while (!cityQueue.isEmpty()) {
-            TeamsCity city = cityQueue.poll();
-            searchDone.add(city);
-            for (TeamsPath path : city.getTeamPaths()) {
-                TeamsCity nextCity = teamCityMap.get(path.getPath().getOtherCity(city.getCity()));
-                if (!searchDone.contains(nextCity)) {
-                    int newDistance = city.getDistanceToRome() + 1;
-                    if (newDistance < nextCity.getDistanceToRome()) {
-                        nextCity.setDistanceToRome(newDistance);
-                        if (cityQueue.contains(nextCity)) {
-                            cityQueue.remove(nextCity);
-                        }
-                        cityQueue.add(nextCity);
-                    }
-                }
-            }
-        }
-    }
-
-    public double calculateMaxFlowToRome() {
+    public double calculateMaxFlowToRome(Map<Integer, City> cityMap) {
 
         double maxFlow = 0;
         final int source = teamCityMap.size();
@@ -140,8 +113,10 @@ public class TeamsGraph {
         // while there is a path from source to sink
         while (bfs(rGraph, source, sink, parent)) {
             double pathFlow = Double.MAX_VALUE;
+            int flowDepth = 0;
             // find path flow
             for (int v = sink; v != source; v = parent[v]) {
+                flowDepth++;
                 int u = parent[v];
                 pathFlow = Math.min(pathFlow, rGraph[u][v]);
             }
@@ -150,9 +125,22 @@ public class TeamsGraph {
                 int u = parent[v];
                 rGraph[u][v] -= pathFlow;
                 rGraph[v][u] += pathFlow;
+                // decompuse the flow to the teamsCities
+                if (u == source) {
+                    teamCityMap.get(cityMap.get(v)).addToCapacityUsed(pathFlow, flowDepth);
+                }
             }
             maxFlow += pathFlow;
+
         }
+
+        // decompose the flows to the teamsPaths
+        teamPathMap.values().forEach(teamsPath -> {
+            int id1 = teamCityMap.get(teamsPath.getPath().getCity1()).getCity().getId();
+            int id2 = teamCityMap.get(teamsPath.getPath().getCity2()).getCity().getId();
+            teamsPath.setCapacityUsed(Math.abs(teamsPath.getTradeCapacity()-rGraph[id1][id2]));
+        });
+
         return maxFlow;
     }
 
@@ -227,7 +215,4 @@ public class TeamsGraph {
         return teamPathMap.get(path);
     }
 
-    public void setRomeTo0() {
-        teamsRome.setDistanceToRome(0);
-    }
 }

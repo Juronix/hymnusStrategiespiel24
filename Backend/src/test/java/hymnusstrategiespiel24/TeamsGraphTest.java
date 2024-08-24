@@ -1,6 +1,8 @@
 package hymnusstrategiespiel24;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +24,8 @@ public class TeamsGraphTest {
     private Team team;
     private TeamsGraph teamsGraph;
 
+    private Map<Integer, City> cityMap;
+
     @BeforeEach
     public void setup() {
         
@@ -34,12 +38,12 @@ public class TeamsGraphTest {
         City cityC = City.getNewCity("CityC", 3, 1, province, false);
         City cityD = City.getNewCity("CityD", 4, 1, province, false);
 
-        Set<City> cities = new HashSet<>();
-        cities.add(rome);
-        cities.add(cityA);
-        cities.add(cityB);
-        cities.add(cityC);
-        cities.add(cityD);
+        cityMap = new HashMap<>();
+        cityMap.put(0, rome);
+        cityMap.put(1, cityA);
+        cityMap.put(2, cityB);
+        cityMap.put(3, cityC);
+        cityMap.put(4, cityD);
 
 
         // Pfade hinzufügen
@@ -67,31 +71,26 @@ public class TeamsGraphTest {
         new Donkey(team, pathCD);
         new Donkey(team, pathDR);
 
-        City.refreshDistancesToRome(cities, rome);
-        teamsGraph.refreshDistancesToRome();
-
-        teamsGraph.setRomeTo0();
+        City.refreshDistancesToRome(cityMap.values(), rome);
     }
 
     @Test
     public void testMaxFlowToRome() {
         // Teste die Berechnung des maximalen Flusses
-        double maxFlow = teamsGraph.calculateMaxFlowToRome();
+        double maxFlow = teamsGraph.calculateMaxFlowToRome(cityMap);
 
         // Konsolenausgabe für das Ergebnis
         System.out.println("Maximaler Fluss nach Rom: " + maxFlow);
 
-        teamsGraph.setRomeTo0();
         
         // Konsolenausgabe der Städte und ihrer Eigenschaften
         System.out.println("\nStaedte:");
-        System.out.printf("%-15s%-20s%-25s%-20s\n", "Stadtname", "Distanz nach Rom", "Team Distanz nach Rom", "Genutzte Kapazität");
+        System.out.printf("%-15s%-20s%-20s\n", "Stadtname", "Distanz nach Rom", "Genutzte Kapazität");
         System.out.println("--------------------------------------------------------------------------");
         for (TeamsCity city : teamsGraph.getTeamCities()) {
-            System.out.printf("%-15s%-20d%-25d%-20.2f\n", 
+            System.out.printf("%-15s%-20d%-20.2f\n", 
                 city.getCity().getName(), 
                 city.getCity().getDistanceToRome(), 
-                city.getDistanceToRome(), 
                 city.getCapacityUsed()
             );
         }

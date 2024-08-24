@@ -196,5 +196,9 @@ public class GameService {
         return senate;
     }
 
+    public Map<Integer, City> getCityMap() {
+        return cityMap;
+    }
+
 
 }

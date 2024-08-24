@@ -5,6 +5,7 @@ import java.util.Set;
 
 import group.Team;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -76,7 +77,7 @@ public abstract class City implements Serializable, Comparable<City> {
         }
     }
 
-    public static void refreshDistancesToRome(Set<City> cities, City rome) {
+    public static void refreshDistancesToRome(Collection<City> cities, City rome) {
         PriorityQueue<City> cityQueue = new PriorityQueue<City>(
                 (d1, d2) -> Integer.compare(d1.getDistanceToRome(), d2.getDistanceToRome()));
         cities.forEach(city -> city.distanceToRome = Integer.MAX_VALUE);

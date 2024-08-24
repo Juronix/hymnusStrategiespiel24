@@ -10,7 +10,7 @@ public class TeamsCity {
     private final City city;
     private final int id;
     private final Set<TeamsPath> teamPaths;
-    private int distanceToRome = Integer.MAX_VALUE;
+    private double averageFlowDistance = 1;
     private double capacityUsed = 0.0;
 
     public TeamsCity(City city, int id, Set<TeamsPath> teamPaths) {
@@ -52,13 +52,6 @@ public class TeamsCity {
         return teamPaths;
     }
 
-    public int getDistanceToRome() {
-        return distanceToRome;
-    }
-
-    public void setDistanceToRome(int distanceToRome) {
-        this.distanceToRome = distanceToRome;
-    }
 /*
     public void resetDistanceToRome() {
         distanceToRome = Integer.MAX_VALUE;
@@ -68,8 +61,13 @@ public class TeamsCity {
         teamPaths.add(teamsPath);
     }
 
-    public void setCapacityUsed(double capacityUsed) {
-        this.capacityUsed = capacityUsed;
+    public void addToCapacityUsed(double capacityUsed, int flowDepth) {
+        if(capacityUsed > 0){
+            averageFlowDistance = (averageFlowDistance*this.capacityUsed + flowDepth*capacityUsed)/(this.capacityUsed + capacityUsed);
+        } else {
+            averageFlowDistance = flowDepth;
+        }
+        this.capacityUsed = this.capacityUsed + capacityUsed;
     }
 
     public int getId() {

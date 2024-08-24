@@ -17,6 +17,34 @@ public abstract class TradeUnit implements Serializable {
 
     public abstract double getCapacity();
 
+    public void createNewTradeUnit(boolean landTradeUnit, int level, Team team, Path path) {
+        if (landTradeUnit) {
+            switch (level) {
+                case 1:
+                    new Donkey(team, path);
+                    break;
+                case 2:
+                    new BullockCart(team, path);
+                    break;
+                case 3:
+                    new HorseCart(team, path);
+                    break;
+            }
+        } else {
+            switch(level) {
+                case 1:
+                    new Triere(team, path);
+                    break;
+                case 2:
+                    new Corbita(team, path);
+                    break;
+                case 3:
+                    new Dodekaere(team, path);
+                    break;
+            }
+        }
+    }
+
     public Team getTeam() {
         return team;
     }

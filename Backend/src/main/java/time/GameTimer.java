@@ -24,7 +24,7 @@ public class GameTimer implements Serializable{
 		TimerTask reputationTask = new TimerTask() {
 			@Override
 			public void run() {
-				GameService.getGameService().getFamilies().parallelStream().forEach(family -> family.giveReputationForTrade());
+				GameService.getGameService().getFamilies().parallelStream().forEach(family -> family.giveReputationForTrade(GameService.getGameService().getCityMap()));
 			}
 		};
 
