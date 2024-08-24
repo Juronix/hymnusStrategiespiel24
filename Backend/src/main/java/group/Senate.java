@@ -17,7 +17,7 @@ public class Senate {
 
     public Senate() {
         nameList.add("Marcus Licinius Crassus");
-        nameList.add("Augustus");
+        nameList.add("Augustus Aerocus");
         nameList.add("Gnaeus Pompeius Magnus");
         nameList.add("Lucius Cornelius Sulla");
         nameList.add("Marcus Agrippa");
@@ -30,7 +30,7 @@ public class Senate {
         this.familyOfPolitician1 = familyOfPolitician1;
     }
 
-    public void setFamilyOfPolitician2(Family familyOfPolitician2) {  // Augustus, +6% famliyReputation at the end
+    public void setFamilyOfPolitician2(Family familyOfPolitician2) {  // Augustus Aerocus, +6% famliyReputation at the end
         this.familyOfPolitician2 = familyOfPolitician2;
     }
 

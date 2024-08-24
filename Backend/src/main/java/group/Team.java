@@ -13,7 +13,7 @@ public class Team implements Serializable {
     private String name;
     @JsonIgnore
     private Family family;
-    private double hymnen;
+    private double hymnen = 0.0;
     private double reputation = 0.0;
     private double additionalReputationMultiplier = 1.0;
     

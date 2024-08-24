@@ -1,6 +1,7 @@
 package group;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import city.City;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,6 +36,35 @@ public class TeamsGraph {
 
     public void giveHymnenForTrade() {
         //TODO
+    }
+
+    public List<City> getCitiesToTradeTo() {
+        return teamCityMap.keySet().stream()
+            .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
+            .collect(Collectors.toList());
+    }
+
+    public List<City> getCitiesToTradeTo(TradeUnit tradeUnit) {
+        return teamCityMap.values().stream()
+            .filter(teamsCity -> {
+                for(TeamsPath teamPath : teamsCity.getTeamPaths()) {
+                    if(teamPath.getPath().canTrade(tradeUnit)) {
+                        return true;
+                    }
+                }
+                return false;
+            })
+            .map(TeamsCity::getCity)
+            .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
+            .collect(Collectors.toList());
+    }
+
+    public List<City> getCitiesToTradeTo(TradeUnit tradeUnit, City city) {
+        return city.getPaths().stream()
+            .filter(path -> path.canTrade(tradeUnit))
+            .map(path -> path.getOtherCity(city))
+            .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
+            .collect(Collectors.toList());
     }
 
     public void refreshDistancesToRome() {
