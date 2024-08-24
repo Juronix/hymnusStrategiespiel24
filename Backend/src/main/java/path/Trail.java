@@ -7,7 +7,7 @@ import tradeUnit.TradeUnit;
 
 public class Trail extends Path {
 
-    private static int maxTradingTeams = 4;
+    private static final int maxTradingTeams = 4;
 
     public Trail(City city1, City city2) {
         super(city1, city2);

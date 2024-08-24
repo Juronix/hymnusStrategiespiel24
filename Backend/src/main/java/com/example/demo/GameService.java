@@ -24,9 +24,9 @@ public class GameService {
     private GameTime time = new GameTime();
     private Set<Province> provinces = new HashSet<>();
     private City rome;
+    private Senate senate = new Senate();
     private Map<Integer, City> cityMap = new HashMap<>();
     private Set<Family> families = new HashSet<>();
-    private Senate senate = new Senate();
 
     private static GameService gameService;
 

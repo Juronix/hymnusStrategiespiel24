@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import city.City;
+import database.Database;
+
 import com.example.demo.dto.AddReputationRequest;
 import com.example.demo.dto.TeamNameChangeRequest;
 import group.Family;
@@ -9,9 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import time.GameTime;
+import time.GameTimer;
 
 import java.util.Set;
 import java.util.Collection;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 public class GameController {
@@ -101,16 +107,47 @@ public class GameController {
         System.out.println(cityId);
     }
 
-    @PostMapping("/resetHymnen")
-    public void resetHymnen(@RequestParam(value = "teamName") String teamName){
-        System.out.println(teamName);
-    }
-
-    @PostMapping("/setup")
+    //initial call to setup new game
+    @PostMapping("/setup")  
     public void setup(){
         game.setupGame();
     }
 
-    //TODO get Cities possible
+    // initial call to load and setup game
+    @PostMapping("/loadGame") 
+    public void loadGame(){
+        try {
+            Database.loadDatabase(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // call to close game
+    @PostMapping("/closeGame")
+    public void closeGame(){
+        pauseGame();
+        saveGame();
+        //TODO close game
+    }
+
+
+    @PostMapping("/saveGame")
+    public void saveGame() {
+        Database.resaveDatabase();
+    }
+
+    @PostMapping("/resumeGame")
+    public void resumeGame() {
+        GameTimer.start();
+    }
+
+    @PostMapping("/pauseGame")
+    public void pauseGame() {
+        GameTimer.stop();
+    }
+
+
+    //TODO: getCitysToTravelTo
 
 }

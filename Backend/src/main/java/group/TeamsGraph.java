@@ -11,6 +11,8 @@ public class TeamsGraph {
 
     @JsonIgnore
     private final TeamsCity teamsRome;
+    @JsonIgnore
+    private boolean isTradeUnitAdded = false;
     private final Map<City, TeamsCity> teamCityMap;
     private final Map<Path, TeamsPath> teamPathMap;
 
@@ -22,7 +24,17 @@ public class TeamsGraph {
     }
 
     public void giveReputationForTrade() {
+        if(isTradeUnitAdded){
+            refreshDistancesToRome();
+            calculateMaxFlowToRome();
+        } else {
 
+        }
+        //TODO
+    }
+
+    public void giveHymnenForTrade() {
+        //TODO
     }
 
     public void refreshDistancesToRome() {
@@ -152,6 +164,7 @@ public class TeamsGraph {
             addPath(path);
             teamPathMap.get(path).addTradeUnit(tradeUnit);
         }
+        isTradeUnitAdded = true;
     }
 
     public Collection<TeamsCity> getTeamCities() {

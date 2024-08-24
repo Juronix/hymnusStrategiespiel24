@@ -5,9 +5,6 @@ import java.io.Serializable;
 
 public class GameTime implements Serializable{
 
-	public GameTime() {
-	}
-
 	private static final long serialVersionUID = 1L;
 
 	private int minutesPlayed = 0;

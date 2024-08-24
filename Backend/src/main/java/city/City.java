@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class City implements Serializable, Comparable<City> {
     private final String name;
-    private final int cityLevel;
     private final int id;
     private final Province province;
     private int distanceToRome = Integer.MAX_VALUE;
@@ -35,16 +34,15 @@ public abstract class City implements Serializable, Comparable<City> {
      * @param name      the name of the city
      * @param cityLevel the level of the city
      */
-    public City(String name, int id, int cityLevel, Province province, boolean hasTradeGood) {
+    public City(String name, int id, Province province, boolean hasTradeGood) {
         this.name = name;
-        this.cityLevel = cityLevel;
         this.province = province;
         this.hasTradeGood = hasTradeGood;
         this.id = id;
     }
 
-    public City(String name, int id, Province province, int cityLevel) {
-        this(name, id, cityLevel, province, false);
+    public City(String name, int id, Province province) {
+        this(name, id, province, false);
     }
 
     public static City getNewCity(String name, int id, int cityLevel, Province province, boolean hasTradeGood) {
@@ -65,6 +63,8 @@ public abstract class City implements Serializable, Comparable<City> {
     public abstract double getReputation();
 
     public abstract double getCapacityNeeded();
+
+    public abstract int getCityLevel();
 
     @Override
     public int compareTo(City city) {
@@ -130,10 +130,6 @@ public abstract class City implements Serializable, Comparable<City> {
 
     public String getName() {
         return name;
-    }
-
-    public int getCityLevel() {
-        return cityLevel;
     }
 
     public double getMultiplier() {

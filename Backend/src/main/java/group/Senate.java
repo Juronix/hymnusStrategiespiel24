@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Senate {
 
-    public List<String> nameList = new ArrayList<String>();
+    private List<String> nameList = new ArrayList<String>();
     private Family familyOfPolitician1;
     private Family familyOfPolitician2;
     private Family familyOfPolitician3;
@@ -88,6 +88,10 @@ public class Senate {
 
     public Family getFamilyOfPolitician8() {
         return familyOfPolitician8;
+    }
+
+    public List<String> getNameList() {
+        return nameList;
     }
 
 }

@@ -26,29 +26,28 @@ public class Database implements Serializable {
 		resaveDatabase();
 	}
 
-
+	
 	public static void resaveDatabase() {
 		databaseIO.save(activDatabase, "database-G"+activDatabase.getGameID());
 	}
 
 	public static void safetySaveDatabase(final int hour, final int minute) {
-		databaseIO.save(activDatabase, "database-G"+activDatabase.getGameID());
-		databaseIO.save(activDatabase, "database-G"+activDatabase.getGameID()+"-"+hour+"-"+minute);
-	}
-
-	public static void safetySaveDatabase() {
-		int minutesPlayed = getGameService().getGameTime().getMinutesPlayed();
-		int minute = minutesPlayed%60;
 		String minuteString;
 		if(minute<10) {
 			minuteString = "0"+minute;
 		} else {
 			minuteString = String.valueOf(minute);
 		}
-		int hour = minutesPlayed/60;
+		databaseIO.save(activDatabase, "database-G"+activDatabase.getGameID());
 		databaseIO.save(activDatabase, "database-G"+activDatabase.getGameID()+"-"+hour+"-"+minuteString);
 	}
 
+	public static void safetySaveDatabase() {
+		int minutesPlayed = getGameService().getGameTime().getMinutesPlayed();
+		int minute = minutesPlayed%60;
+		int hour = minutesPlayed/60;
+		safetySaveDatabase(hour, minute);
+	}
 
 	public static void loadDatabase(final int gameID) throws Exception {
 		activDatabase = databaseIO.load("database-G"+gameID);

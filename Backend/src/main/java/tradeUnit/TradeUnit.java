@@ -7,7 +7,7 @@ import path.Path;
 
 public abstract class TradeUnit implements Serializable {
 
-    private Team team;
+    private final Team team;
 
     public TradeUnit(Team team, Path path) {
         this.team = team;

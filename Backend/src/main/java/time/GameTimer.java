@@ -6,57 +6,50 @@ import java.util.TimerTask;
 
 import com.example.demo.GameService;
 
+import database.Database;
+
 
 public class GameTimer implements Serializable{
-/** 
+
 	private static final long serialVersionUID = 1L;
 
-//	private static int moveInterval = 1;
-	private static int influenceInterval = 5;
+	private static int influenceInterval = 5;	// interval in seconds
 	private static int ressourceInterval = 60;
 
-	private Timer timer = new Timer();
+	private static Timer timer = new Timer();
 
-	private final static GameTimer gameTimer = new GameTimer();
-
-	public void start() {
+	public static void start() {
 		timer = new Timer();
 
 		TimerTask reputationTask = new TimerTask() {
 			@Override
 			public void run() {
-				GameService.getGameService()..influenceTick();
-				StarmapStage.getMainStarmapStage().updateInfluences();
+				GameService.getGameService().getFamilies().parallelStream().forEach(family -> family.giveReputationForTrade());
 			}
 		};
 
-		TimerTask ressourceTask = new TimerTask() {
+		TimerTask hymnenTask = new TimerTask() {
 			@Override
 			public void run() {
-				Planet.ressourceTick();
-				GameTime.getGameTime().addAPlayedMinute();
-				BankAccount.addAllNextGoods();
-				BankPane.update();
-				StarmapStage.getMainStarmapStage().updateGalacticPower();
-				if(GameTime.getGameTime().getMinutesPlayed()%20 == 0) {
+				GameService.getGameService().getFamilies().parallelStream().forEach(family -> family.giveHymnenForTrade());
+				getGameTime().addAPlayedMinute();
+				if(getGameTime().getMinutesPlayed()%20 == 0) {
 					Database.safetySaveDatabase();
 				}
 			}
 		};
 
-		double gameSpeed = GameTime.getGameTime().getGameSpeed();
-	//	timer.scheduleAtFixedRate(moveTask, 0, (long) (1000*moveInterval/gameSpeed));
-		timer.scheduleAtFixedRate(influenceTask, 0, (long) (1000*influenceInterval/gameSpeed));
-		timer.scheduleAtFixedRate(ressourceTask, 0, (long) (1000*ressourceInterval/gameSpeed));
+		double gameSpeed = getGameTime().getGameSpeed();
+		timer.scheduleAtFixedRate(reputationTask, 0, (long) (1000*influenceInterval/gameSpeed));
+		timer.scheduleAtFixedRate(hymnenTask, 0, (long) (1000*ressourceInterval/gameSpeed));
 	}
 
-	public void stop() {
+	public static void stop() {
 		timer.cancel();
 	}
 
-	public static GameTimer getGameTimer() {
-		return gameTimer;
+	public static GameTime getGameTime() {
+		return GameService.getGameService().getGameTime();
 	}
 
-*/
 }

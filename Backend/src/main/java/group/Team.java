@@ -32,6 +32,10 @@ public class Team implements Serializable {
         teamsGraph.giveReputationForTrade();
     }
 
+    public void giveHymnenForTrade() {
+        teamsGraph.giveHymnenForTrade();
+    }
+
 
     public void addReputation(double reputation) {
         this.reputation += reputation;

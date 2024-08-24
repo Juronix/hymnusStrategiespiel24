@@ -14,6 +14,18 @@ public class Family {
         this.name = name;
     }
 
+    public void giveReputationForTrade(){
+        for (Team team : teams) {
+            team.giveReputationForTrade();
+        }
+    }
+
+    public void giveHymnenForTrade(){
+        for (Team team : teams) {
+            team.giveHymnenForTrade();
+        }
+    }
+
     public void addTeam(Team team) {
         teams.add(team);
     }
