@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-function SetupButton() {
+function PauseGame() {
   const [status, setStatus] = useState('');
 
   const handleSetup = async () => {
     try {
       setStatus('Sending...');
-      const response = await fetch('http://localhost:8080/setup', {
+      const response = await fetch('http://localhost:8080/pauseGame', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,10 +29,10 @@ function SetupButton() {
 
   return (
     <div>
-      <button onClick={handleSetup}>Setup</button>
+      <button onClick={handleSetup}>Pause Game</button>
       <p>{status}</p>
     </div>
   );
 }
 
-export default SetupButton;
+export default PauseGame;

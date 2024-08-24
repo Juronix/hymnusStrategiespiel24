@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SetupButton from './home/SetupButton';
+import LaodGame from './home/LoadGame';
+import CloseGame from './home/CloseGame';
+import SaveGame from './home/SaveGame';
+import ResumeGame from './home/ResumeGame';
+import PauseGame from './home/PauseGame';
 
 function Home() {
   return (
@@ -11,7 +16,11 @@ function Home() {
       <li><Link to="/centralhub">CentralHub</Link></li>
       <h1>functions</h1>
       <SetupButton />
-
+      <LaodGame />
+      <CloseGame />
+      <SaveGame />
+      <ResumeGame />
+      <PauseGame />
     </div>
   );
 }
