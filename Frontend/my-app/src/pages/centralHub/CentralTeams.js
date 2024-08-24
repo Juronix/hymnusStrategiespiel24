@@ -42,31 +42,31 @@ function CentralTeams() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleNameChange = async (team, oldName) => {
+  const handleNameChange = async (id) => {
     try {
       await fetch('http://localhost:8080/setTeamName', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ oldName, newName: newTeamNames[oldName] }),
+        body: JSON.stringify({ id, newName: newTeamNames[id] }),
       });
-      setNewTeamNames({ ...newTeamNames, [oldName]: '' });
+      setNewTeamNames({ ...newTeamNames, [id]: '' });
     } catch (error) {
       console.error('Error updating team name:', error);
     }
   };
 
-  const handleAddReputation = async (teamName) => {
+  const handleAddReputation = async (id) => {
     try {
       await fetch('http://localhost:8080/addReputation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ teamName, reputation: reputation[teamName] }),
+        body: JSON.stringify({ id, reputation: reputation[id] }),
       });
-      setReputation({ ...reputation, [teamName]: 0 });
+      setReputation({ ...reputation, [id]: 0 });
     } catch (error) {
       console.error('Error adding reputation:', error);
     }
@@ -144,10 +144,10 @@ function CentralTeams() {
                 New Team Name:
                 <input
                   type="text"
-                  value={newTeamNames[team.name] || ''}
-                  onChange={(e) => setNewTeamNames({ ...newTeamNames, [team.name]: e.target.value })}
+                  value={newTeamNames[team.id] || ''}
+                  onChange={(e) => setNewTeamNames({ ...newTeamNames, [team.id]: e.target.value })}
                 />
-                <button onClick={() => handleNameChange(team.name, team.name)}>Update Name</button>
+                <button onClick={() => handleNameChange(team.id)}>Update Name</button>
               </label>
             </div>
 
@@ -157,10 +157,10 @@ function CentralTeams() {
                 Add Reputation:
                 <input
                   type="number"
-                  value={reputation[team.name] || 0}
-                  onChange={(e) => setReputation({ ...reputation, [team.name]: parseFloat(e.target.value) })}
+                  value={reputation[team.id] || 0}
+                  onChange={(e) => setReputation({ ...reputation, [team.id]: parseFloat(e.target.value) })}
                 />
-                <button onClick={() => handleAddReputation(team.name)}>Add</button>
+                <button onClick={() => handleAddReputation(team.id)}>Add</button>
               </label>
             </div>
 
