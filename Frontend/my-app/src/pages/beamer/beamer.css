@@ -1,0 +1,5 @@
+.background-image {
+    background-image: url("/public/Hintergrund.png");
+    background-size: cover;
+    height: 100vh;
+}
