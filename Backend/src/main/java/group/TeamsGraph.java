@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 import city.City;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import path.Path;
+import path.Road;
+import path.SeaRoute;
+import path.Trail;
 import tradeUnit.TradeUnit;
 
 public class TeamsGraph {
@@ -14,10 +17,13 @@ public class TeamsGraph {
     private final TeamsCity teamsRome;
     @JsonIgnore
     private boolean isTradeUnitAdded = false;
+    @JsonIgnore
+    private Team team;
     private final Map<City, TeamsCity> teamCityMap;
     private final Map<Path, TeamsPath> teamPathMap;
 
-    public TeamsGraph(City rome) {
+    public TeamsGraph(Team team, City rome) {
+        this.team = team;
         teamCityMap = new HashMap<>();
         teamPathMap = new HashMap<>();
         teamsRome = new TeamsCity(rome, 0);
@@ -44,24 +50,32 @@ public class TeamsGraph {
             .collect(Collectors.toList());
     }
 
-    public List<City> getCitiesToTradeTo(TradeUnit tradeUnit) {
+    public List<City> getCitiesToTradeTo(boolean isLandTradeUnit) {
         return teamCityMap.values().stream()
-            .filter(teamsCity -> {
-                for(TeamsPath teamPath : teamsCity.getTeamPaths()) {
-                    if(teamPath.getPath().canTrade(tradeUnit)) {
-                        return true;
+            .filter(teamsCity -> 
+                teamsCity.getTeamPaths().stream().anyMatch(teamsPath -> {
+                    Path path = teamsPath.getPath();
+                    if(isLandTradeUnit) {
+                        return path instanceof Road || path instanceof Trail;
+                    } else {
+                        return path instanceof SeaRoute;
                     }
-                }
-                return false;
-            })
+                }))
             .map(TeamsCity::getCity)
             .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
             .collect(Collectors.toList());
     }
 
-    public List<City> getCitiesToTradeTo(TradeUnit tradeUnit, City city) {
+    public List<City> getCitiesToTradeTo(boolean isLandTradeUnit, City city) {
         return city.getPaths().stream()
-            .filter(path -> path.canTrade(tradeUnit))
+            .filter(path -> {
+                if(isLandTradeUnit) {
+                    return path instanceof Road || path instanceof Trail;
+                } else {
+                    return path instanceof SeaRoute;
+                }
+            })
+            .filter(path -> path.teamCouldTrade(team))
             .map(path -> path.getOtherCity(city))
             .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
             .collect(Collectors.toList());

@@ -3,11 +3,11 @@ package tradeUnit;
 import group.Team;
 import path.Path;
 
-public class bullockCart extends LandTradeUnit {
+public class BullockCart extends LandTradeUnit {
     
-    private static final double capacity = 10;
+    private static final double capacity = 3;
 
-    public bullockCart(Team team, Path path) {
+    public BullockCart(Team team, Path path) {
         super(team, path);
     }
 

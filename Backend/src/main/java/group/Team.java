@@ -24,7 +24,7 @@ public class Team implements Serializable {
         this.name = name;
         this.family = family;
         family.addTeam(this);
-        this.teamsGraph = new TeamsGraph(rome);
+        this.teamsGraph = new TeamsGraph(this, rome);
         rome.addTradePost(this);
     }
 

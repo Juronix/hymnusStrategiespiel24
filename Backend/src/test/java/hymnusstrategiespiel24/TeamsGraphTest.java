@@ -17,8 +17,6 @@ import group.TeamsGraph;
 import tradeUnit.Donkey;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class TeamsGraphTest {
 
     private Team team;

@@ -48,6 +48,10 @@ public abstract class Path implements Serializable {
         return hasSpaceFor(tradeUnit.getTeam()) && canPass(tradeUnit) && hasTradingPosts(tradeUnit.getTeam());
     }
 
+    public boolean teamCouldTrade(Team team) {
+        return hasSpaceFor(team) && hasTradingPosts(team);
+    }
+
     public void addTradeUnit(TradeUnit tradeUnit) {
         if(!canTrade(tradeUnit)) {
             throw new IllegalArgumentException("Cannot trade on this path");
