@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './beamer/beamer.css';
 
 function Beamer() {
   const [families, setFamilies] = useState([]);
@@ -17,26 +18,22 @@ function Beamer() {
     return () => clearInterval(interval);
   }, []);
 
-    // Funktion zur Berechnung des Gesamteinflusses einer Familie
-    const calculateInfluence = (family) => {
-      const teamReputationSum = family.teams.reduce((acc, team) => acc + team.reputation, 0);
-      return teamReputationSum + family.additionalReputation;
-    };
+  // Funktion, um den höchsten Reputationswert zu berechnen
+  const maxInfluence = Math.max(...families.map(family => family.reputation));
 
-    const colors = ['#4caf50', '#ff9800', '#2196f3', '#9c27b0', '#f44336', '#00bcd4'];
+  const colors = ['#4caf50', '#ff9800', '#2196f3', '#9c27b0', '#f44336', '#00bcd4'];
 
   return (
-    <div>
-      <h1>Families Influence Overview</h1>
+    <div className='background-image'>
       {families.length > 0 ? (
         families.map((family, index) => {
-          const influence = calculateInfluence(family);
+          const influence = family.reputation;
           return (
             <div key={index} style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc' }}>
               <h2>{family.name}</h2>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{ width: '200px' }}>Influence: {influence.toFixed(2)}</div>
-                <div style={{ width: '100%', backgroundColor: '#eee', marginLeft: '10px', display: 'flex' }}>
+                <div style={{ width: '200px' }}>Einfluss: {influence.toFixed(0)}</div>
+                <div style={{ width: `${(family.reputation / maxInfluence) * 100}%`, backgroundColor: '#eee', marginLeft: '10px', display: 'flex' }}>
                   {family.teams.map((team, idx) => {
                     const teamInfluence = team.reputation;
                     const teamWidth = (teamInfluence / influence) * 100;
@@ -54,7 +51,7 @@ function Beamer() {
                           alignItems: 'center',
                         }}
                       >
-                        {teamInfluence.toFixed(2)}
+                        {team.name}
                       </div>
                     );
                   })}
@@ -70,7 +67,7 @@ function Beamer() {
                       alignItems: 'center',
                     }}
                   >
-                    +{family.additionalReputation.toFixed(2)}
+                    +{family.additionalReputation.toFixed(0)}
                   </div>
                 </div>
               </div>
