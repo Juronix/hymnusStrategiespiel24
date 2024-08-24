@@ -14,10 +14,10 @@ public class TeamsGraph {
     private final Map<City, TeamsCity> teamCityMap;
     private final Map<Path, TeamsPath> teamPathMap;
 
-    public TeamsGraph() {
+    public TeamsGraph(City rome) {
         teamCityMap = new HashMap<>();
         teamPathMap = new HashMap<>();
-        teamsRome = new TeamsCity(City.getRome(), 0);
+        teamsRome = new TeamsCity(rome, 0);
         teamCityMap.put(teamsRome.getCity(), teamsRome);
     }
 

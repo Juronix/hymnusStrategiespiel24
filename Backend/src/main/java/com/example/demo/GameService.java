@@ -5,12 +5,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 
 import city.City;
 import city.Province;
 import group.Family;
+import group.Senate;
 import group.Team;
 import path.Path;
 import time.GameTime;
@@ -21,8 +23,33 @@ public class GameService {
 
     private GameTime time = new GameTime();
     private Set<Province> provinces = new HashSet<>();
-    private Set<City> cities = new HashSet<>();
+    private City rome;
+    private Map<Integer, City> cityMap = new HashMap<>();
     private Set<Family> families = new HashSet<>();
+    private Senate senate = new Senate();
+
+    private static GameService gameService;
+
+    public GameService() {
+        gameService = this;
+    }
+
+    public static GameService getGameService() {
+        return gameService;
+    }
+
+    public static void setGameService(GameService gameService) {
+        GameService.gameService = gameService;
+    }
+
+    public static void reloadStaticGameService(GameService gameService) {
+        GameService.gameService = gameService;
+    }
+
+    public void setupGame() {
+        createCitiesAndPaths();
+        createSenateTeamsAndFamilies();
+    }
 
     public void createCitiesAndPaths(){
 
@@ -39,7 +66,7 @@ public class GameService {
             }
         }
 
-        Map<String, City> cityMap = new HashMap<>();
+        Map<String, City> cityNameMap = new HashMap<>();
 
         try (Scanner scanner = new Scanner(City.class.getResourceAsStream("/csv/cities.csv"))) {
             scanner.useDelimiter(";|\n");
@@ -53,9 +80,13 @@ public class GameService {
                 Province provinceObj = provinceMap.get(province);
                 boolean hasTradeGood = (tradeGood != null && !tradeGood.isEmpty());
 
-                City city = City.getNewCity(name, level, provinceObj, hasTradeGood);
-                cityMap.put(name, city);
-                cities.add(city);
+                int id = cityMap.size();
+                City city = City.getNewCity(name, id, level, provinceObj, hasTradeGood);
+                cityNameMap.put(name, city);
+                cityMap.put(Integer.valueOf(id), city);
+                if(city.getCityLevel() == 0){
+                    rome = city;
+                }
             }
         }
 
@@ -68,8 +99,8 @@ public class GameService {
                 boolean isSeaRoute = Boolean.parseBoolean(scanner.next());
                 boolean isTrail = Boolean.parseBoolean(scanner.next());
 
-                City city1Obj = cityMap.get(city1);
-                City city2Obj = cityMap.get(city2);
+                City city1Obj = cityNameMap.get(city1);
+                City city2Obj = cityNameMap.get(city2);
 
                 if (city2Obj == null) {
                     throw new IllegalArgumentException("City2Obi is null: " + city2);
@@ -82,7 +113,8 @@ public class GameService {
     }
 
 
-    public void createTeamsAndFamilies() {
+    public void createSenateTeamsAndFamilies() {
+        senate = new Senate();
         Family family1 = new Family("Family 1");
         Family family2 = new Family("Family 2");
         Family family3 = new Family("Family 3");
@@ -92,25 +124,10 @@ public class GameService {
         int i = 0;
         for (Family family : families) {
             for (int j = 0; j < 3; j++) {
-                new Team("Team " + i, family);
+                new Team("Team " + i, family, rome);
                 i++;
             }
         }
-        //TODO create Senat
-    }
-
-
-
-    public GameTime getTime() {
-        return time;
-    }
-
-    public Set<City> getCities() {
-        return cities;
-    }
-
-    public Set<Family> getFamilies() {
-        return families;
     }
 
     public boolean changeTeamName(String oldName, String newName) {
@@ -138,6 +155,35 @@ public class GameService {
 //        }
     }
 
-    
-    
+    public GameTime getGameTime() {
+        return time;
+    }
+
+    public Set<Province> getProvinces() {
+        return provinces;
+    }
+
+    public City getRome() {
+        return rome;
+    }
+
+    public City getCity(int id) {
+        return cityMap.get(id);
+    }
+
+    public Collection<City> getCities() {
+        return cityMap.values();
+    }
+
+    public Set<Family> getFamilies() {
+        return families;
+    }
+
+    public Senate getSenate() {
+        return senate;
+    }
+
+
+
+
 }

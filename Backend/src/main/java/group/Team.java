@@ -19,12 +19,12 @@ public class Team implements Serializable {
     
     private TeamsGraph teamsGraph;
 
-    public Team(String name, Family family) {
+    public Team(String name, Family family, City rome) {
         this.name = name;
         this.family = family;
         family.addTeam(this);
-        this.teamsGraph = new TeamsGraph();
-        City.getRome().addTradePost(this);
+        this.teamsGraph = new TeamsGraph(rome);
+        rome.addTradePost(this);
     }
 
 

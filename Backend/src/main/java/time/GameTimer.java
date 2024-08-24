@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/* 
+import com.example.demo.GameService;
+
 
 public class GameTimer implements Serializable{
-
+/** 
 	private static final long serialVersionUID = 1L;
 
 //	private static int moveInterval = 1;
@@ -21,10 +22,10 @@ public class GameTimer implements Serializable{
 	public void start() {
 		timer = new Timer();
 
-		TimerTask influenceTask = new TimerTask() {
+		TimerTask reputationTask = new TimerTask() {
 			@Override
 			public void run() {
-				Planet.influenceTick();
+				GameService.getGameService()..influenceTick();
 				StarmapStage.getMainStarmapStage().updateInfluences();
 			}
 		};
@@ -57,7 +58,5 @@ public class GameTimer implements Serializable{
 		return gameTimer;
 	}
 
-
-}
-
 */
+}
