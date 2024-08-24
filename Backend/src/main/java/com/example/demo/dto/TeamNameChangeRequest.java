@@ -1,16 +1,16 @@
 package com.example.demo.dto;
 
 public class TeamNameChangeRequest {
-    private String oldName;
+    private int id;
     private String newName;
 
     // Getter und Setter
-    public String getOldName() {
-        return oldName;
+    public int getId() {
+        return id;
     }
 
-    public void setOldName(String oldName) {
-        this.oldName = oldName;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNewName() {

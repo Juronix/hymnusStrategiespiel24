@@ -9,7 +9,7 @@ import path.Path;
 import tradeUnit.TradeUnit;
 
 public class Team implements Serializable {
-    
+    private int id;
     private String name;
     @JsonIgnore
     private Family family;
@@ -19,12 +19,21 @@ public class Team implements Serializable {
     
     private TeamsGraph teamsGraph;
 
-    public Team(String name, Family family) {
+    public Team(int id, String name, Family family) {
+        this.id = id;
         this.name = name;
         this.family = family;
         family.addTeam(this);
         this.teamsGraph = new TeamsGraph();
         City.getRome().addTradePost(this);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 
