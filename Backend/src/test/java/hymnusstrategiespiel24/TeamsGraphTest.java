@@ -1,9 +1,7 @@
 package hymnusstrategiespiel24;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -95,4 +93,30 @@ public class TeamsGraphTest {
             );
         }
     }
+
+    @Test
+    public void testCitiesToTradeTo() {
+        
+        System.out.println("\nHandelsposten:");
+        teamsGraph.getCitiesToTradeTo().forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+        System.out.println("\nHandelsposten (Land):");
+        teamsGraph.getCitiesToTradeTo(true).forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+        System.out.println("\nHandelsposten (See):");
+        teamsGraph.getCitiesToTradeTo(false).forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+        System.out.println("\nHandelsposten (Rome):");
+        teamsGraph.getCitiesToTradeTo(true, cityMap.get(0)).forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+    }
+
 }

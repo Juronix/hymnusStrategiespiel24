@@ -261,4 +261,11 @@ public class GameService {
         City city= this.getCity(cityId);
         return team.getTeamsGraph().getCitiesToTradeTo(isLandTradeUnit, city);
     }
+
+    public void createTradePost(int teamId, int cityId) {
+        Team team = this.getTeamById(teamId);
+        City city = this.getCity(cityId);
+        team.createTradePost(city);
+    }
+
 }

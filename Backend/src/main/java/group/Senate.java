@@ -27,6 +27,10 @@ public class Senate {
     }
 
     public void setFamilyOfPolitician1(Family familyOfPolitician1) {  // Marcus Licinius Crassus, +20% Hymnen
+        if(this.familyOfPolitician1 != null) {
+            this.familyOfPolitician1.somethingChanged();
+        }
+        familyOfPolitician1.somethingChanged();
         this.familyOfPolitician1 = familyOfPolitician1;
     }
 
@@ -35,6 +39,10 @@ public class Senate {
     }
 
     public void setFamilyOfPolitician3(Family familyOfPolitician3) {  // Gnaeus Pompeius Magnus, +10% more reputation
+        if(this.familyOfPolitician3 != null) {
+            this.familyOfPolitician3.somethingChanged();
+        }
+        familyOfPolitician3.somethingChanged();
         this.familyOfPolitician3 = familyOfPolitician3;
     }
 
@@ -43,6 +51,10 @@ public class Senate {
     }
 
     public void setFamilyOfPolitician5(Family familyOfPolitician5) {  // Marcus Agrippa, + 20% more transport capacity
+        if(this.familyOfPolitician5 != null) {
+            this.familyOfPolitician5.somethingChanged();
+        }
+        familyOfPolitician5.somethingChanged();
         this.familyOfPolitician5 = familyOfPolitician5;
     }
 
@@ -51,6 +63,10 @@ public class Senate {
     }
 
     public void setFamilyOfPolitician7(Family familyOfPolitician7) {  // Marecus Aemilius Lepidus, +20% more production in all cities
+        if(this.familyOfPolitician7 != null) {
+            this.familyOfPolitician7.somethingChanged();
+        }
+        familyOfPolitician7.somethingChanged();
         this.familyOfPolitician7 = familyOfPolitician7;
     }
 

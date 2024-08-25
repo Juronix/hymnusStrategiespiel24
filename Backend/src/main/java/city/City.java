@@ -29,6 +29,9 @@ public abstract class City implements Serializable, Comparable<City> {
     @JsonIgnore
     private Set<Path> paths = new HashSet<>();
 
+    @JsonIgnore
+    private static final double hymnenForTrade = 15.0;
+
     /**
      * Constructs a City with the specified name and level.
      *
@@ -110,13 +113,6 @@ public abstract class City implements Serializable, Comparable<City> {
         }
     }
 
-    /**
-     * 
-     */
-    public double getReputationForTrade(Team team, double capacityUsed, double reputationMultiplier) {
-        return 0; //TODO
-    };
-
     public void addPath(Path path) {
         paths.add(path);
     }
@@ -159,6 +155,18 @@ public abstract class City implements Serializable, Comparable<City> {
 
     public Province getProvince() {
         return province;
+    }
+
+    public double getHymnenForTrade(double capacityUsed) {
+        if(hasTradeGood) {
+            return (capacityUsed/getCapacityNeeded()) * hymnenForTrade;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public double getReputationForTrade(double capacityUsed, double averageFlowDistance) {
+        return getReputation() * (capacityUsed/getCapacityNeeded()) * distanceToRome * Math.pow(distanceToRome/averageFlowDistance, 0.6);
     }
 
 }
