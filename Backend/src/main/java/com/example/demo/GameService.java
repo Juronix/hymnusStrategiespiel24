@@ -92,8 +92,12 @@ public class GameService {
             while (scanner.hasNext()) {
                 String city1 = scanner.next();
                 String city2 = scanner.next();
-                boolean isSeaRoute = Boolean.parseBoolean(scanner.next());
-                boolean isTrail = Boolean.parseBoolean(scanner.next());
+
+                String isSeaRouteString = scanner.next();
+                String isTrailString = scanner.next();
+
+                boolean isSeaRoute = isSeaRouteString.equals("1");
+                boolean isTrail = isTrailString.contains("1");
 
                 City city1Obj = cityNameMap.get(city1);
                 City city2Obj = cityNameMap.get(city2);

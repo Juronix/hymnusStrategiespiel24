@@ -18,8 +18,7 @@ public class TeamsGraphTestWithGameService {
     private GameService gameService;
     private Team team;
     private TeamsGraph teamsGraph;
-    private City rome;
-    private City city1;
+    
 
 
     @BeforeEach
@@ -42,6 +41,15 @@ public class TeamsGraphTestWithGameService {
         team.createTradePost(gameService.getCityMap().get(2));
         team.createTradePost(gameService.getCityMap().get(3));
         team.createTradePost(gameService.getCityMap().get(4));
+        team.createTradePost(gameService.getCityMap().get(5));
+        team.createTradePost(gameService.getCityMap().get(6));
+        team.createTradePost(gameService.getCityMap().get(7));
+        team.createTradePost(gameService.getCityMap().get(8));
+        team.createTradePost(gameService.getCityMap().get(9));
+        team.createTradePost(gameService.getCityMap().get(10));
+        team.createTradePost(gameService.getCityMap().get(11));
+        team.createTradePost(gameService.getCityMap().get(12));
+        
 
 
         gameService.createNewTradeUnit(true, 0, id, 0, 1);
@@ -78,5 +86,35 @@ public class TeamsGraphTestWithGameService {
         System.out.println("");
 
         System.out.println(team.getReputation());
+    }
+
+    @Test
+    public void testCitiesToTradeTo() {
+        
+        System.out.println("\nHandelsposten:");
+        teamsGraph.getCitiesToTradeTo().forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+        System.out.println("\nHandelsposten (Land):");
+        teamsGraph.getCitiesToTradeTo(true).forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+        System.out.println("\nHandelsposten (See):");
+        teamsGraph.getCitiesToTradeTo(false).forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+        System.out.println("\nHandelsposten (Rome & Land):");
+        teamsGraph.getCitiesToTradeTo(true, gameService.getCityMap().get(0)).forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
+        System.out.println("\nHandelsposten (Rome & See):");
+        teamsGraph.getCitiesToTradeTo(false, gameService.getCityMap().get(0)).forEach(city -> {
+            System.out.print(city.getName()+", ");
+        });
+
     }
 }
