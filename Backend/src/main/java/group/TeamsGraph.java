@@ -32,53 +32,39 @@ public class TeamsGraph {
     }
 
     public void giveReputationForTrade(Map<Integer, City> cityMap) {
-        if(isTradeUnitAdded){
+        if (isTradeUnitAdded) {
             calculateMaxFlowToRome(cityMap);
-        } else {
-
         }
-        //TODO
+        // TODO
     }
 
     public void giveHymnenForTrade() {
-        //TODO
+        // TODO
     }
 
     public List<City> getCitiesToTradeTo() {
         return teamCityMap.keySet().stream()
-            .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
-            .collect(Collectors.toList());
+                .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
+                .collect(Collectors.toList());
     }
 
     public List<City> getCitiesToTradeTo(boolean isLandTradeUnit) {
-        return teamCityMap.values().stream()
-            .filter(teamsCity -> 
-                teamsCity.getTeamPaths().stream().anyMatch(teamsPath -> {
-                    Path path = teamsPath.getPath();
-                    if(isLandTradeUnit) {
-                        return path instanceof Road || path instanceof Trail;
-                    } else {
-                        return path instanceof SeaRoute;
-                    }
-                }))
-            .map(TeamsCity::getCity)
-            .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
-            .collect(Collectors.toList());
+        return getCitiesToTradeTo();
     }
 
     public List<City> getCitiesToTradeTo(boolean isLandTradeUnit, City city) {
         return city.getPaths().stream()
-            .filter(path -> {
-                if(isLandTradeUnit) {
-                    return path instanceof Road || path instanceof Trail;
-                } else {
-                    return path instanceof SeaRoute;
-                }
-            })
-            .filter(path -> path.teamCouldTrade(team))
-            .map(path -> path.getOtherCity(city))
-            .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
-            .collect(Collectors.toList());
+                .filter(path -> {
+                    if (isLandTradeUnit) {
+                        return path instanceof Road || path instanceof Trail;
+                    } else {
+                        return path instanceof SeaRoute;
+                    }
+                })
+                .filter(path -> path.teamCouldTrade(team))
+                .map(path -> path.getOtherCity(city))
+                .sorted((city1, city2) -> city1.getName().compareToIgnoreCase(city2.getName()))
+                .collect(Collectors.toList());
     }
 
     public double calculateMaxFlowToRome(Map<Integer, City> cityMap) {
@@ -138,7 +124,7 @@ public class TeamsGraph {
         teamPathMap.values().forEach(teamsPath -> {
             int id1 = teamCityMap.get(teamsPath.getPath().getCity1()).getCity().getId();
             int id2 = teamCityMap.get(teamsPath.getPath().getCity2()).getCity().getId();
-            teamsPath.setCapacityUsed(Math.abs(teamsPath.getTradeCapacity()-rGraph[id1][id2]));
+            teamsPath.setCapacityUsed(Math.abs(teamsPath.getTradeCapacity() - rGraph[id1][id2]));
         });
 
         return maxFlow;
