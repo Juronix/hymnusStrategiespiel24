@@ -31,7 +31,7 @@ function CentralTeams() {
         setCities(data);
         
       } catch (error) {
-        console.error('Error fetching families:', error);
+        console.error('Error fetching cities:', error);
       }
     };
 
@@ -84,7 +84,6 @@ function CentralTeams() {
         },
         body: JSON.stringify({ id, multiplier: reputationMultiplier[id] }),
       });
-      console.log(...reputationMultiplier);
       setReputationMultiplier({ ...reputationMultiplier, [id]: 0 });
     } catch (error) {
       console.error('Error setting reputation multiplier:', error);
@@ -101,7 +100,7 @@ function CentralTeams() {
         body: JSON.stringify({ id, cityId: selectedCityId}),
       });
     } catch (error) {
-      console.error('Error setting reputation multiplier:', error);
+      console.error('Error building city:', error);
     }
   };
 
@@ -174,7 +173,7 @@ function CentralTeams() {
                 <div>Reputation Multiplier: {team.additionalReputationMultiplier} </div>
                 <input
                   type="number"
-                  value={reputationMultiplier[team.id]}
+                  value={reputationMultiplier[team.id] || 0}
                   onChange={(e) =>
                     setReputationMultiplier({ ...reputationMultiplier, [team.id]: parseFloat(e.target.value) })
                   }
@@ -186,7 +185,7 @@ function CentralTeams() {
             {/* Add city */}
             <div>
               <h3>Handelsposten</h3>
-                {team.teamsGraph.teamCities.map((city) => <div>{city.city.name}</div>)}
+                {team.teamsGraph.teamCities.map((city) => <div key={city.city.id}>{city.city.name}</div>)}
                 <select
                   value={selectedCityId}
                   onChange={(e) => setSelectedCityId(e.target.value)}
@@ -204,9 +203,34 @@ function CentralTeams() {
             </div>
 
             {/* Set Path for Trade Units */}
-            <div>
-                
-            </div>
+            <h3>Trade Units</h3>
+            {team.teamsGraph.teamPaths && team.teamsGraph.teamPaths.map((teamPath, index) => (
+              teamPath ? (
+                <div key={index}>
+                  {teamPath.path.city1?.name || 'Unbekannte Stadt'} - {teamPath.path.city2?.name || 'Unbekannte Stadt'}
+
+                  {/* Berechnung und Anzeige des Balkendiagramms */}
+                  <div style={{ marginTop: '5px', marginBottom: '10px', border: '1px solid' }}>
+                    <div
+                      style={{
+                        width: `${(teamPath.utilisation / teamPath.tradeCapacity) * 100}%`,
+                        height: '20px',
+                        backgroundColor: 
+                          teamPath.utilisation / teamPath.tradeCapacity <= 0.6 ? 'green' :
+                          teamPath.utilisation / teamPath.tradeCapacity <= 0.8 ? 'yellow' : 'red',
+                      }}
+                    />
+                  </div>
+                  <div>
+                    {`Auslastung: ${(teamPath.utilisation / teamPath.tradeCapacity * 100).toFixed(2)}%`}
+                  </div>
+                </div>
+              ) : (
+                <div key={index}>Pfad ist nicht verfügbar</div>
+              )
+            ))}
+
+
 
             {/* Hymns Reset */}
             <div>
@@ -217,7 +241,7 @@ function CentralTeams() {
           </div>
         ))
       )}
-    </div>
+      </div>
   );
 }
 

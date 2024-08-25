@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import city.City;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import group.Team;
 import tradeUnit.TradeUnit;
 
@@ -85,6 +86,7 @@ public abstract class Path implements Serializable {
         return tradeUnitTeamMap.get(team);
     }
 
+    @JsonIgnore
     public Set<Team> getTradingTeams() {
         return tradeUnitTeamMap.keySet();
     }

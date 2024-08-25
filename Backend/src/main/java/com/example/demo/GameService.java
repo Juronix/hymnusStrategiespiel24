@@ -9,7 +9,6 @@ import city.Province;
 import group.Family;
 import group.Senate;
 import group.Team;
-import org.springframework.web.bind.annotation.RequestParam;
 import path.Path;
 import time.GameTime;
 import tradeUnit.TradeUnit;
@@ -230,10 +229,11 @@ public class GameService {
         return cityMap;
     }
 
-    public void createNewTradeUnit(boolean isLandTradeUnit, int unitLevel, int teamId, int cityId1, int cityId2) {
+    public boolean createNewTradeUnit(boolean isLandTradeUnit, int unitLevel, int teamId, int cityId1, int cityId2) {
         Path path = getPath(cityId1, cityId2);
         Team team = getTeamById(teamId);
         TradeUnit.createNewTradeUnit(isLandTradeUnit, unitLevel, team, path);
+        return true;
     }
 
     public Path getPath(int cityId1, int cityId2) {

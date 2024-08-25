@@ -1,13 +1,9 @@
 package com.example.demo;
 
 import city.City;
+import com.example.demo.dto.*;
 import database.Database;
 
-import com.example.demo.dto.AddReputationRequest;
-import com.example.demo.dto.SetReputationMultiplier;
-import com.example.demo.dto.TeamNameChangeRequest;
-import com.example.demo.dto.ResetHymnenRequest;
-import com.example.demo.dto.BuildCityRequest;
 import group.Family;
 import group.Team;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,19 +129,27 @@ public class GameController {
         }
     }
 
-    @PostMapping("/setPath")
-    public void setPath(@RequestParam(value = "teamName") String teamName, @RequestParam(value = "city1") String city1, @RequestParam(value = "city2") String city2, @RequestParam(value = "tradeUnits") String tradeUnits){
-        System.out.println(teamName);
-        System.out.println(city1);
-        System.out.println(city2);
-        System.out.println(tradeUnits);
+    @PostMapping("/buildTradePost")
+    public ResponseEntity<String> buildTradePost(@RequestParam(value = "teamId") String teamId, @RequestParam(value = "cityId") String cityId ){
+        //todo
+        boolean success = true;
+        if (success) {
+            return ResponseEntity.ok("SetReputationMultiplier successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to set reputation multiplier");
+        }
     }
 
-    @PostMapping("/buildTradePost")
-    public void buildTradePost(@RequestParam(value = "teamName") String teamName, @RequestParam(value = "cityId") String cityId ){
-        System.out.println(teamName);
-        System.out.println(cityId);
+    @PostMapping("/createNewTradeUnit")
+    public ResponseEntity<String> createNewTradeUnit(@RequestBody CreateNewTradeUnitRequest request){
+        boolean success = game.createNewTradeUnit(request.getIsLandTradeUnit(), request.getUnitLevel(), request.getTeamId(), request.getCityId1(), request.getCityId2());
+        if (success) {
+            return ResponseEntity.ok("createNewTradeUnit successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to create New Trade Unit");
+        }
     }
+
     @GetMapping("/getCitiesToTradeTo")
     public List<City> getCitiesToTradeTo(@RequestParam(value = "teamId") int teamId) {
         return game.getCitiesToTradeTo(teamId);
