@@ -1,11 +1,6 @@
 package com.example.demo;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.Collection;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
@@ -14,6 +9,7 @@ import city.Province;
 import group.Family;
 import group.Senate;
 import group.Team;
+import org.springframework.web.bind.annotation.RequestParam;
 import path.Path;
 import time.GameTime;
 import tradeUnit.TradeUnit;
@@ -182,7 +178,8 @@ public class GameService {
     public boolean resetHymnen(int id) {
         Team team = this.getTeamById(id);
         if (team != null) {
-            team.setHymnen(0);
+            double oldHymnen = team.getHymnen();
+            team.setHymnen(oldHymnen % 100);
             return true;
         } else {
             return false;
@@ -208,6 +205,17 @@ public class GameService {
 
     public Collection<City> getCities() {
         return cityMap.values();
+    }
+
+    public boolean buildCity(int id, int cityId) {
+        Team team = this.getTeamById(id);
+        if (team != null) {
+            City city = this.getCity(cityId);
+            team.createTradePost(city);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Set<Family> getFamilies() {
@@ -240,5 +248,17 @@ public class GameService {
         return null;
     }
 
-
+    public List<City> getCitiesToTradeTo(int teamId) {
+        Team team = this.getTeamById(teamId);
+        return team.getTeamsGraph().getCitiesToTradeTo();
+    }
+    public List<City> getCitiesToTradeTo(int teamId, boolean isLandTradeUnit) {
+        Team team = this.getTeamById(teamId);
+        return team.getTeamsGraph().getCitiesToTradeTo(isLandTradeUnit);
+    }
+    public List<City> getCitiesToTradeTo(int teamId, boolean isLandTradeUnit, int cityId) {
+        Team team = this.getTeamById(teamId);
+        City city= this.getCity(cityId);
+        return team.getTeamsGraph().getCitiesToTradeTo(isLandTradeUnit, city);
+    }
 }

@@ -7,6 +7,7 @@ import com.example.demo.dto.AddReputationRequest;
 import com.example.demo.dto.SetReputationMultiplier;
 import com.example.demo.dto.TeamNameChangeRequest;
 import com.example.demo.dto.ResetHymnenRequest;
+import com.example.demo.dto.BuildCityRequest;
 import group.Family;
 import group.Team;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import time.GameTime;
 import time.GameTimer;
 
+import java.util.List;
 import java.util.Set;
 import java.util.Collection;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,7 +65,7 @@ public class GameController {
 
     @PostMapping("/testhymnen")
     public void testHymnen(){
-        double add = 1.0;
+        double add = 100.0;
         for (Family family : game.getFamilies()) {
             for (Team team : family.getTeams()) {
                 team.setHymnen(add++);
@@ -85,6 +87,17 @@ public class GameController {
     @GetMapping("/getCities")
     public Collection<City> getCities() {
         return game.getCities();
+    }
+
+    @PostMapping("/buildCity")
+    public ResponseEntity<String> buildCity(@RequestBody BuildCityRequest request) {
+        boolean success = game.buildCity(request.getId(), request.getCityId());
+
+        if (success) {
+            return ResponseEntity.ok("Team name updated successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to update team name");
+        }
     }
 
     @PostMapping("/setTeamName")
@@ -132,6 +145,18 @@ public class GameController {
     public void buildTradePost(@RequestParam(value = "teamName") String teamName, @RequestParam(value = "cityId") String cityId ){
         System.out.println(teamName);
         System.out.println(cityId);
+    }
+    @GetMapping("/getCitiesToTradeTo")
+    public List<City> getCitiesToTradeTo(@RequestParam(value = "teamId") int teamId) {
+        return game.getCitiesToTradeTo(teamId);
+    }
+    @GetMapping("/getCitiesToTradeTo2")
+    public List<City> getCitiesToTradeTo(@RequestParam(value = "teamId") int teamId, @RequestParam(value = "isLandTradeUnit") boolean isLandTradeUnit) {
+        return game.getCitiesToTradeTo(teamId, isLandTradeUnit);
+    }
+    @GetMapping("/getCitiesToTradeTo3")
+    public List<City> getCitiesToTradeTo(@RequestParam(value = "teamId") int teamId, @RequestParam(value = "isLandTradeUnit") boolean isLandTradeUnit, @RequestParam(value = "cityId") int cityId) {
+        return game.getCitiesToTradeTo(teamId, isLandTradeUnit, cityId);
     }
 
     //initial call to setup new game
