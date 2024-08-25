@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.example.demo.GameService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import path.Path;
 import tradeUnit.TradeUnit;
@@ -39,11 +40,15 @@ public class TeamsPath {
         for(TradeUnit tradeUnit : tradeUnits) {
             tradeCapacity += tradeUnit.getCapacity();
         }
-        Family senatorsFamily = GameService.getGameService().getSenate().getFamilyOfPolitician7();
-        if(senatorsFamily == tradeUnits.iterator().next().getTeam().getFamily()) {
+        Family senatorsFamily = GameService.getGameService().getSenate().getFamilyOfPolitician5();
+        if(senatorsFamily == getFamily()) {
             tradeCapacity *= 1.2;
         }
-        
+    }
+
+    @JsonIgnore
+    public Family getFamily() {
+        return tradeUnits.iterator().next().getTeam().getFamily();
     }
 
     public void addTradeUnit(TradeUnit tradeUnit) {
