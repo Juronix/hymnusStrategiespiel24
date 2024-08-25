@@ -3,7 +3,7 @@ package city;
 
 public class CityLvl2 extends City {
 
-    private static final double reputation = 100;
+    private static final double reputation = 14;
     private static final double capacityNeeded = 2.0/3.0;
 
     

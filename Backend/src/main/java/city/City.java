@@ -166,7 +166,11 @@ public abstract class City implements Serializable, Comparable<City> {
     }
 
     public double getReputationForTrade(double capacityUsed, double averageFlowDistance) {
-        return getReputation() * (capacityUsed/getCapacityNeeded()) * distanceToRome * Math.pow(distanceToRome/averageFlowDistance, 0.6);
+        if(getCapacityNeeded() == 0){
+            return 0.0;
+        } else {
+            return getReputation() * (capacityUsed/getCapacityNeeded()) * distanceToRome * Math.pow(distanceToRome/averageFlowDistance, 0.6);
+        }
     }
 
 }
