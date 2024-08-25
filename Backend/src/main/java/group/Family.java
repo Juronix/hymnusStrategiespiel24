@@ -61,4 +61,10 @@ public class Family {
         return reputation;
     }
 
+    public void somethingChanged() {
+        for (Team team : teams) {
+            team.somethingChanged();
+        }
+    }
+
 }

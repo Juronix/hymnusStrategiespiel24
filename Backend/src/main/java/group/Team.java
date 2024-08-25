@@ -17,8 +17,9 @@ public class Team implements Serializable {
     private double hymnen = 0.0;
     private double reputation = 0.0;
     private double additionalReputationMultiplier = 1.0;
-    
     private TeamsGraph teamsGraph;
+
+    private static int continuousHymnen = 50;
 
     public Team(String name, int id, Family family, City rome) {
         this.id = id;
@@ -43,6 +44,7 @@ public class Team implements Serializable {
     }
 
     public void giveHymnenForTrade() {
+        addHymnen(continuousHymnen);
         teamsGraph.giveHymnenForTrade();
     }
 
@@ -103,6 +105,10 @@ public class Team implements Serializable {
 
     public void addHymnen(double hymnen) {
         this.hymnen += hymnen;
+    }
+
+    public void somethingChanged() {
+        teamsGraph.somethingChanged();
     }
 
 }

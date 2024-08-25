@@ -17,9 +17,13 @@ public class TeamsGraph {
     @JsonIgnore
     private final TeamsCity teamsRome;
     @JsonIgnore
-    private boolean isTradeUnitAdded = false;
+    private boolean somethingChanged = false;
     @JsonIgnore
     private Team team;
+    @JsonIgnore
+    private double hymnenForTrade = 0.0;
+    @JsonIgnore
+    private double reputationForTrade = 0.0;
     private final Map<City, TeamsCity> teamCityMap;
     private final Map<Path, TeamsPath> teamPathMap;
 
@@ -32,15 +36,38 @@ public class TeamsGraph {
     }
 
     public void giveReputationForTrade(Map<Integer, City> cityMap) {
-        if (isTradeUnitAdded) {
+        if (somethingChanged) {
             calculateMaxFlowToRome(cityMap);
+            recalculateReputationForTrade();
+            recalculateHymnenForTrade();
         }
-        // TODO
+        somethingChanged = false;
+        team.addReputation(reputationForTrade);
     }
 
     public void giveHymnenForTrade() {
-        // TODO
+        team.addHymnen(hymnenForTrade);
     }
+
+    private void recalculateReputationForTrade() {
+        double reputationForTrade = 0.0;
+        for (TeamsCity teamsCity : teamCityMap.values()) {
+            teamsCity.recalculateReputationForTrade();
+            reputationForTrade += teamsCity.getReputationForTrade();
+        }
+        this.reputationForTrade = reputationForTrade;
+    }
+
+    private void recalculateHymnenForTrade() {
+        double hymnenForTrade = 0.0;
+        for (TeamsCity teamsCity : teamCityMap.values()) {
+            teamsCity.recalculateHymnenForTrade();
+            hymnenForTrade += teamsCity.getHymnenForTrade();
+        }
+        this.hymnenForTrade = hymnenForTrade;
+    }
+
+ 
 
     public List<City> getCitiesToTradeTo() {
         return teamCityMap.keySet().stream()
@@ -182,7 +209,7 @@ public class TeamsGraph {
             addPath(path);
             teamPathMap.get(path).addTradeUnit(tradeUnit);
         }
-        isTradeUnitAdded = true;
+        somethingChanged = true;
     }
 
     public Collection<TeamsCity> getTeamCities() {
@@ -199,6 +226,10 @@ public class TeamsGraph {
 
     public TeamsPath getTeamsPath(Path path) {
         return teamPathMap.get(path);
+    }
+
+    public void somethingChanged() {
+        somethingChanged = true;
     }
 
 }

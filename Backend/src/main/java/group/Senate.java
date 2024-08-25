@@ -27,6 +27,9 @@ public class Senate {
     }
 
     public void setFamilyOfPolitician1(Family familyOfPolitician1) {  // Marcus Licinius Crassus, +20% Hymnen
+        if(familyOfPolitician1 != null) {
+            familyOfPolitician1.somethingChanged();
+        }
         this.familyOfPolitician1 = familyOfPolitician1;
     }
 

@@ -63,11 +63,11 @@ public class TeamsGraphTest {
         team.createTradePost(cityD);
 
         // Handelseinheiten erstellen
-    /*  new Donkey(team, pathRA);
+        new Donkey(team, pathRA);
         new Donkey(team, pathAB);
         new Donkey(team, pathBC);
         new Donkey(team, pathCD);
-        new Donkey(team, pathDR);*/
+        new Donkey(team, pathDR);
 
         City.refreshDistancesToRome(cityMap.values(), rome);
     }
@@ -92,7 +92,11 @@ public class TeamsGraphTest {
                 city.getCapacityUsed()
             );
         }
+    }
 
+    @Test
+    public void testCitiesToTradeTo() {
+        
         System.out.println("\nHandelsposten:");
         teamsGraph.getCitiesToTradeTo().forEach(city -> {
             System.out.print(city.getName()+", ");
@@ -113,6 +117,6 @@ public class TeamsGraphTest {
             System.out.print(city.getName()+", ");
         });
 
-
     }
+
 }

@@ -12,6 +12,8 @@ public class TeamsCity {
     private final Set<TeamsPath> teamPaths;
     private double averageFlowDistance = 1;
     private double capacityUsed = 0.0;
+    private double hymnenForTrade = 0.0;
+    private double reputationForTrade = 0.0;
 
     public TeamsCity(City city, int id, Set<TeamsPath> teamPaths) {
         this.city = city;
@@ -52,11 +54,14 @@ public class TeamsCity {
         return teamPaths;
     }
 
-/*
-    public void resetDistanceToRome() {
-        distanceToRome = Integer.MAX_VALUE;
+    public void recalculateHymnenForTrade(){
+        hymnenForTrade = city.getHymnenForTrade(capacityUsed);
     }
-*/
+
+    public void recalculateReputationForTrade() {
+        reputationForTrade = city.getReputationForTrade(capacityUsed, averageFlowDistance);
+    }
+
     public void addPath(TeamsPath teamsPath) {
         teamPaths.add(teamsPath);
     }
@@ -73,5 +78,15 @@ public class TeamsCity {
     public int getId() {
         return id;
     }
+
+    public double getHymnenForTrade() {
+        return hymnenForTrade;
+    }
+
+    public double getReputationForTrade() {
+        return reputationForTrade;
+    }
+
+
 
 }
