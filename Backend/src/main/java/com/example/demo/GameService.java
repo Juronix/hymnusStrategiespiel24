@@ -16,6 +16,7 @@ import group.Senate;
 import group.Team;
 import path.Path;
 import time.GameTime;
+import tradeUnit.TradeUnit;
 
 
 @Service
@@ -219,6 +220,24 @@ public class GameService {
 
     public Map<Integer, City> getCityMap() {
         return cityMap;
+    }
+
+    public void createNewTradeUnit(boolean isLandTradeUnit, int unitLevel, int teamId, int cityId1, int cityId2) {
+        Path path = getPath(cityId1, cityId2);
+        Team team = getTeamById(teamId);
+        TradeUnit.createNewTradeUnit(isLandTradeUnit, unitLevel, team, path);
+    }
+
+    public Path getPath(int cityId1, int cityId2) {
+        City city1 = cityMap.get(cityId1);
+        City city2 = cityMap.get(cityId2);
+
+        for (Path path : city1.getPaths()) {
+            if (path.getOtherCity(city1).equals(city2)) {
+                return path;
+            }
+        }
+        return null;
     }
 
 
