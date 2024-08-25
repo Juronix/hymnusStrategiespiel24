@@ -118,8 +118,8 @@ public class TeamsGraph {
         // fill rGraph with capacities
         teamPathMap.values().forEach(teamsPath -> {
             teamsPath.refreshTradeCapacity();
-            int id1 = teamCityMap.get(teamsPath.getPath().getCity1()).getCity().getId();
-            int id2 = teamCityMap.get(teamsPath.getPath().getCity2()).getCity().getId();
+            int id1 = teamCityMap.get(teamsPath.getPath().getCity1()).getId();
+            int id2 = teamCityMap.get(teamsPath.getPath().getCity2()).getId();
             rGraph[id1][id2] = teamsPath.getTradeCapacity();
             rGraph[id2][id1] = teamsPath.getTradeCapacity(); // cause undirected graph
         });
@@ -157,8 +157,8 @@ public class TeamsGraph {
 
         // decompose the flows to the teamsPaths
         teamPathMap.values().forEach(teamsPath -> {
-            int id1 = teamCityMap.get(teamsPath.getPath().getCity1()).getCity().getId();
-            int id2 = teamCityMap.get(teamsPath.getPath().getCity2()).getCity().getId();
+            int id1 = teamCityMap.get(teamsPath.getPath().getCity1()).getId();
+            int id2 = teamCityMap.get(teamsPath.getPath().getCity2()).getId();
             teamsPath.setCapacityUsed(Math.abs(teamsPath.getTradeCapacity() - rGraph[id1][id2]));
         });
 

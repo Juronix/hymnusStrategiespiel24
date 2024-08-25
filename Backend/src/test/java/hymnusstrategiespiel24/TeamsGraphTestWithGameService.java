@@ -5,12 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import com.example.demo.GameService;
 
-import city.City;
 import group.Family;
 import group.Team;
 import group.TeamsCity;
 import group.TeamsGraph;
-import tradeUnit.TradeUnit;
 
 
 public class TeamsGraphTestWithGameService {
@@ -49,11 +47,23 @@ public class TeamsGraphTestWithGameService {
         team.createTradePost(gameService.getCityMap().get(10));
         team.createTradePost(gameService.getCityMap().get(11));
         team.createTradePost(gameService.getCityMap().get(12));
-        
+
+
+        for(Family family : gameService.getFamilies()){
+            family.giveReputationForTrade(gameService.getCityMap());
+            family.giveHymnenForTrade();
+        }
 
 
         gameService.createNewTradeUnit(true, 0, id, 0, 1);
+        gameService.createNewTradeUnit(true, 0, id, 0, 3);
 
+        for(Family family : gameService.getFamilies()){
+            family.giveReputationForTrade(gameService.getCityMap());
+            family.giveHymnenForTrade();
+        }
+
+        gameService.createNewTradeUnit(false, 0, id, 0, 7);
 
         for(Family family : gameService.getFamilies()){
             family.giveReputationForTrade(gameService.getCityMap());
