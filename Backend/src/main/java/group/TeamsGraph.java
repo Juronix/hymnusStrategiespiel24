@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import city.City;
 
+import com.example.demo.GameService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import path.Path;
 import path.Road;
@@ -65,6 +66,12 @@ public class TeamsGraph {
             hymnenForTrade += teamsCity.getHymnenForTrade();
         }
         this.hymnenForTrade = hymnenForTrade;
+
+        Family senatorsFamily = GameService.getGameService().getSenate().getFamilyOfPolitician1();
+        if(senatorsFamily == team.getFamily()) {
+            hymnenForTrade *= 1.2;
+        }
+        
     }
 
  
@@ -120,7 +127,7 @@ public class TeamsGraph {
         teamCityMap.values().forEach(teamsCity -> {
             if (teamsCity != teamsRome) {
                 int id = teamsCity.getId();
-                rGraph[source][id] = teamsCity.getCity().getCapacityNeeded();
+                rGraph[source][id] = teamsCity.getCapacityNeeded();
             }
         });
 

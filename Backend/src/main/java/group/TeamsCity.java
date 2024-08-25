@@ -1,6 +1,9 @@
 package group;
 
 import java.util.Set;
+
+import com.example.demo.GameService;
+
 import java.util.HashSet;
 
 import city.City;
@@ -59,7 +62,30 @@ public class TeamsCity {
     }
 
     public void recalculateReputationForTrade() {
-        reputationForTrade = city.getReputationForTrade(capacityUsed, averageFlowDistance);
+        if(teamPaths.isEmpty()){
+            return;
+        } else {
+            reputationForTrade = city.getReputationForTrade(capacityUsed, averageFlowDistance);
+
+            Family senator3Family = GameService.getGameService().getSenate().getFamilyOfPolitician3();
+            Family senator7Family = GameService.getGameService().getSenate().getFamilyOfPolitician7();
+
+            if(senator3Family == teamPaths.iterator().next().getFamily()) {
+                reputationForTrade *= 1.1;
+            }
+            if(senator7Family == teamPaths.iterator().next().getFamily()){
+                reputationForTrade *= 1.2;
+            }
+        }
+    }
+
+    public double getCapacityNeeded() {
+        Family senator7Family = GameService.getGameService().getSenate().getFamilyOfPolitician7();
+        if(senator7Family == teamPaths.iterator().next().getFamily()){
+            return city.getCapacityNeeded()*1.2;
+        } else {
+            return city.getCapacityNeeded();
+        }
     }
 
     public void addPath(TeamsPath teamsPath) {
