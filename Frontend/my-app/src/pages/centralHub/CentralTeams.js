@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 function CentralTeams() {
   const [families, setFamilies] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [selectedCityId, setSelectedCityId] = useState('');
   const [newTeamNames, setNewTeamNames] = useState({});
   const [reputation, setReputation] = useState({});
   const [reputationMultiplier, setReputationMultiplier] = useState({});
@@ -21,7 +23,20 @@ function CentralTeams() {
       }
     };
 
+    const fetchCities = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/getCities');
+        if (!response.ok) throw new Error('Failed to fetch data');
+        const data = await response.json();
+        setCities(data);
+        
+      } catch (error) {
+        console.error('Error fetching families:', error);
+      }
+    };
+
     fetchFamilies();
+    fetchCities();
 
     const interval = setInterval(() => {
       fetchFamilies();
@@ -76,32 +91,32 @@ function CentralTeams() {
     }
   };
 
-  const handleSetPath = async (teamName, city1, city2) => {
+  const handleBuild = async (id) => {
+    try {
+      await fetch('http://localhost:8080/buildCity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, cityId: selectedCityId}),
+      });
+    } catch (error) {
+      console.error('Error setting reputation multiplier:', error);
+    }
+  };
+
+  const handleSetPath = async (id, city1, city2) => {
     try {
       await fetch('http://localhost:8080/setPath', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ teamName, city1, city2, tradeUnits: tradeUnits[teamName] }),
+        body: JSON.stringify({ id, city1, city2, tradeUnits: tradeUnits[id] }),
       });
-      setTradeUnits({ ...tradeUnits, [teamName]: 0 });
+      setTradeUnits({ ...tradeUnits, [id]: 0 });
     } catch (error) {
       console.error('Error setting path:', error);
-    }
-  };
-
-  const handleBuildTradePost = async (teamName, cityId) => {
-    try {
-      await fetch('http://localhost:8080/buildTradePost', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ teamName, cityId }),
-      });
-    } catch (error) {
-      console.error('Error building trade post:', error);
     }
   };
 
@@ -168,27 +183,29 @@ function CentralTeams() {
               </label>
             </div>
 
+            {/* Add city */}
+            <div>
+              <h3>Handelsposten</h3>
+                {team.teamsGraph.teamCities.map((city) => <div>{city.city.name}</div>)}
+                <select
+                  value={selectedCityId}
+                  onChange={(e) => setSelectedCityId(e.target.value)}
+                >
+                <option value="" disabled>
+                  Stadt auswählen
+                </option>
+                {cities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+              <button onClick={() => handleBuild(team.id)}>Bauen</button>
+            </div>
+
             {/* Set Path for Trade Units */}
             <div>
-              <h3>Set Path for Trade Units</h3>
-              {team.teamsGraph.teamCities.map((city1) =>
-                team.teamsGraph.teamCities.map(
-                  (city2) =>
-                    city1.city.id !== city2.city.id && (
-                      <div key={`${city1.city.id}-${city2.city.id}`}>
-                        <span>{city1.city.name} - {city2.city.name}</span>
-                        <input
-                          type="number"
-                          value={tradeUnits[team.name] || 0}
-                          onChange={(e) => setTradeUnits({ ...tradeUnits, [team.name]: parseFloat(e.target.value) })}
-                        />
-                        <button onClick={() => handleSetPath(team.name, city1.city.name, city2.city.name)}>
-                          Set Path
-                        </button>
-                      </div>
-                    )
-                )
-              )}
+                
             </div>
 
             {/* Hymns Reset */}
