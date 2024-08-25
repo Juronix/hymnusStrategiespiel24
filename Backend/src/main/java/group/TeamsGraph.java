@@ -203,8 +203,8 @@ public class TeamsGraph {
         teamCityMap.put(city, new TeamsCity(city, teamCityMap.size()));
     }
 
-    public void addPath(Path path) {
-        TeamsPath teamsPath = new TeamsPath(path);
+    public void addPath(Path path, TradeUnit tradeUnit) {
+        TeamsPath teamsPath = new TeamsPath(path, tradeUnit);
         teamCityMap.get(path.getCity1()).addPath(teamsPath);
         teamCityMap.get(path.getCity2()).addPath(teamsPath);
         teamPathMap.put(path, teamsPath);
@@ -214,8 +214,7 @@ public class TeamsGraph {
         if (teamPathMap.containsKey(path)) {
             teamPathMap.get(path).addTradeUnit(tradeUnit);
         } else {
-            addPath(path);
-            teamPathMap.get(path).addTradeUnit(tradeUnit);
+            addPath(path, tradeUnit);
         }
         somethingChanged = true;
     }

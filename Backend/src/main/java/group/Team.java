@@ -87,7 +87,6 @@ public class Team implements Serializable {
     }
 
     public double getReputationMultiplier(){
-        //TODO add senat
         return additionalReputationMultiplier;
     }
 

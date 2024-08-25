@@ -29,12 +29,6 @@ public class TeamsPath {
         refreshTradeCapacity();
     }
 
-    public TeamsPath(Path path) {
-        this.path = path;
-        this.tradeUnits = new HashSet<>();
-        refreshTradeCapacity();
-    }
-
     public void refreshTradeCapacity() {
         tradeCapacity = 0;
         for(TradeUnit tradeUnit : tradeUnits) {
