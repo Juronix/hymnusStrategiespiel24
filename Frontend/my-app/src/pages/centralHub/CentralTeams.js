@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AddTradePath from './AddTradePath'; // Importiere die neue Komponente
 
 function CentralTeams() {
   const [families, setFamilies] = useState([]);
@@ -7,17 +8,15 @@ function CentralTeams() {
   const [newTeamNames, setNewTeamNames] = useState({});
   const [reputation, setReputation] = useState({});
   const [reputationMultiplier, setReputationMultiplier] = useState({});
-  const [tradeUnits, setTradeUnits] = useState({});
-  const [hymns, setHymns] = useState({});
 
   useEffect(() => {
+    // Der Code für fetchFamilies und fetchCities bleibt gleich
     const fetchFamilies = async () => {
       try {
         const response = await fetch('http://localhost:8080/getFamilies');
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setFamilies(data);
-        
       } catch (error) {
         console.error('Error fetching families:', error);
       }
@@ -29,7 +28,6 @@ function CentralTeams() {
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setCities(data);
-        
       } catch (error) {
         console.error('Error fetching cities:', error);
       }
@@ -101,21 +99,6 @@ function CentralTeams() {
       });
     } catch (error) {
       console.error('Error building city:', error);
-    }
-  };
-
-  const handleSetPath = async (id, city1, city2) => {
-    try {
-      await fetch('http://localhost:8080/setPath', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, city1, city2, tradeUnits: tradeUnits[id] }),
-      });
-      setTradeUnits({ ...tradeUnits, [id]: 0 });
-    } catch (error) {
-      console.error('Error setting path:', error);
     }
   };
 
@@ -230,7 +213,8 @@ function CentralTeams() {
               )
             ))}
 
-
+            {/* Hier die neue Komponente für das Hinzufügen eines Handelspfads */}
+            <AddTradePath teamId={team.id} />
 
             {/* Hymns Reset */}
             <div>
@@ -241,7 +225,7 @@ function CentralTeams() {
           </div>
         ))
       )}
-      </div>
+    </div>
   );
 }
 
