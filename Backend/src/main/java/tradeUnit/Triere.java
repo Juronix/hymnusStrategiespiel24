@@ -5,7 +5,7 @@ import path.Path;
 
 public class Triere extends SeaTradeUnit {
 
-    private static final double capacity = 3;
+    private static final double capacity = 2.5;
 
     public Triere(Team team, Path path) {
         super(team, path);
