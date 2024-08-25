@@ -3,20 +3,42 @@ import './beamer/beamer.css';
 
 function Beamer() {
   const [families, setFamilies] = useState([]);
+  const [senate, setSenate] = useState([]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    // Funktion zum Laden der Daten
+    const fetchFamiliesData = () => {
       fetch('http://localhost:8080/getFamilies')
         .then(response => response.json())
         .then(data => {
-          console.log('Daten aktualisiert:', data);
           setFamilies(data);
         })
         .catch(error => console.error('Fehler beim Abrufen der Daten:', error));
-    }, 5000); // Alle 5 Sekunden
+    };
+
+    const fetchSenateData = () => {
+      fetch('http://localhost:8080/getSenate')
+        .then(response => response.json())
+        .then(data => {
+          console.log('Daten aktualisiert:', data);
+          setSenate(data);
+        })
+        .catch(error => console.error('Fehler beim Abrufen der Daten:', error));
+    };
+
   
-    return () => clearInterval(interval);
+    // Initialer Datenabruf
+    fetchFamiliesData();
+    fetchSenateData();
+  
+    // Intervall zum regelmäßigen Abrufen der Daten
+    const interval = setInterval(fetchFamiliesData, 5000); // Alle 5 Sekunden
+    const interval2 = setInterval(fetchSenateData, 5000);
+  
+    // Aufräumen des Intervalls beim Beenden der Komponente
+    return () => {clearInterval(interval);clearInterval(interval2)};
   }, []);
+  
 
   // Funktion, um den höchsten Reputationswert zu berechnen
   const maxInfluence = Math.max(...families.map(family => family.reputation));

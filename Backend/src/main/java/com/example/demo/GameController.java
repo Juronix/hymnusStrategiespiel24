@@ -5,6 +5,7 @@ import com.example.demo.dto.*;
 import database.Database;
 
 import group.Family;
+import group.Senate;
 import group.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,11 @@ public class GameController {
     @GetMapping("/getFamilies")
     public Set<Family> getFamilies() {
         return game.getFamilies();
+    }
+
+    @GetMapping("/getSenate")
+    public Senate getSenate() {
+        return game.getSenate();
     }
 
     @PostMapping("/testInfluence")
