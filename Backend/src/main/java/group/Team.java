@@ -101,4 +101,8 @@ public class Team implements Serializable {
         this.hymnen = hymnen;
     }
 
+    public void addHymnen(double hymnen) {
+        this.hymnen += hymnen;
+    }
+
 }
