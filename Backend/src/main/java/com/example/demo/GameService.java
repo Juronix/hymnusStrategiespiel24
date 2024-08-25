@@ -106,6 +106,8 @@ public class GameService {
             }
         }
 
+        City.refreshDistancesToRome(cityMap.values(), rome);
+
     }
 
 
