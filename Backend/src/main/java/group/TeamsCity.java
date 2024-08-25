@@ -81,7 +81,7 @@ public class TeamsCity {
 
     public double getCapacityNeeded() {
         Family senator7Family = GameService.getGameService().getSenate().getFamilyOfPolitician7();
-        if(senator7Family == teamPaths.iterator().next().getFamily()){
+        if(!teamPaths.isEmpty() && senator7Family == teamPaths.iterator().next().getFamily()){
             return city.getCapacityNeeded()*1.2;
         } else {
             return city.getCapacityNeeded();
