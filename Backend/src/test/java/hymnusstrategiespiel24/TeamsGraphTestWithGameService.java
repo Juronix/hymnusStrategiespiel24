@@ -36,17 +36,9 @@ public class TeamsGraphTestWithGameService {
 
         // für jede Familie
         team.createTradePost(gameService.getCityMap().get(1));
-        team.createTradePost(gameService.getCityMap().get(2));
         team.createTradePost(gameService.getCityMap().get(3));
-        team.createTradePost(gameService.getCityMap().get(4));
-        team.createTradePost(gameService.getCityMap().get(5));
-        team.createTradePost(gameService.getCityMap().get(6));
         team.createTradePost(gameService.getCityMap().get(7));
-        team.createTradePost(gameService.getCityMap().get(8));
-        team.createTradePost(gameService.getCityMap().get(9));
-        team.createTradePost(gameService.getCityMap().get(10));
-        team.createTradePost(gameService.getCityMap().get(11));
-        team.createTradePost(gameService.getCityMap().get(12));
+
 
 
         for(Family family : gameService.getFamilies()){

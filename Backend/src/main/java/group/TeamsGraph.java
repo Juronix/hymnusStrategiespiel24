@@ -148,7 +148,11 @@ public class TeamsGraph {
                 rGraph[v][u] += pathFlow;
                 // decompuse the flow to the teamsCities
                 if (u == source) {
-                    teamCityMap.get(cityMap.get(v)).addToCapacityUsed(pathFlow, flowDepth);
+                    final int target = v;
+                    teamCityMap.values().parallelStream()
+                        .filter(teamsCity -> teamsCity.getId() == target)
+                        .findAny().get()
+                        .addToCapacityUsed(pathFlow, flowDepth);
                 }
             }
             maxFlow += pathFlow;
