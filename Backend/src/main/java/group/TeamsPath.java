@@ -3,6 +3,8 @@ package group;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.demo.GameService;
+
 import path.Path;
 import tradeUnit.TradeUnit;
 
@@ -37,11 +39,16 @@ public class TeamsPath {
         for(TradeUnit tradeUnit : tradeUnits) {
             tradeCapacity += tradeUnit.getCapacity();
         }
+        Family senatorsFamily = GameService.getGameService().getSenate().getFamilyOfPolitician7();
+        if(senatorsFamily == tradeUnits.iterator().next().getTeam().getFamily()) {
+            tradeCapacity *= 1.2;
+        }
+        
     }
 
     public void addTradeUnit(TradeUnit tradeUnit) {
         tradeUnits.add(tradeUnit);
-        tradeCapacity += tradeUnit.getCapacity();
+        refreshTradeCapacity();
     }
 
     public void resetCapacityUsed() {

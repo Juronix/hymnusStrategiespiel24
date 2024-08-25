@@ -110,6 +110,7 @@ public class TeamsGraph {
         }
         // fill rGraph with capacities
         teamPathMap.values().forEach(teamsPath -> {
+            teamsPath.refreshTradeCapacity();
             int id1 = teamCityMap.get(teamsPath.getPath().getCity1()).getCity().getId();
             int id2 = teamCityMap.get(teamsPath.getPath().getCity2()).getCity().getId();
             rGraph[id1][id2] = teamsPath.getTradeCapacity();

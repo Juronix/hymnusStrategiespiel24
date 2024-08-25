@@ -111,4 +111,8 @@ public class Team implements Serializable {
         teamsGraph.somethingChanged();
     }
 
+    public Family getFamily() {
+        return family;
+    }
+
 }
