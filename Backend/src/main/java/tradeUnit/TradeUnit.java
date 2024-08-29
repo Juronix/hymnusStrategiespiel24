@@ -7,6 +7,7 @@ import path.Path;
 
 public abstract class TradeUnit implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final Team team;
 
     public TradeUnit(Team team, Path path) {

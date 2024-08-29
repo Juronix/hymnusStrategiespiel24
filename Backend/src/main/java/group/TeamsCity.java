@@ -1,5 +1,6 @@
 package group;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import com.example.demo.GameService;
@@ -8,7 +9,8 @@ import java.util.HashSet;
 
 import city.City;
 
-public class TeamsCity {
+public class TeamsCity implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final City city;
     private final int id;

@@ -1,5 +1,6 @@
 package group;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,8 @@ import path.SeaRoute;
 import path.Trail;
 import tradeUnit.TradeUnit;
 
-public class TeamsGraph {
+public class TeamsGraph implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @JsonIgnore
     private final TeamsCity teamsRome;

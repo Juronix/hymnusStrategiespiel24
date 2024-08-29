@@ -10,6 +10,7 @@ import path.Path;
 import tradeUnit.TradeUnit;
 
 public class Team implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String name;
     @JsonIgnore

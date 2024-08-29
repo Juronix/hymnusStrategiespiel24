@@ -45,6 +45,19 @@ function Beamer() {
 
   const colors = ['#4caf50', '#ff9800', '#2196f3', '#9c27b0', '#f44336', '#00bcd4'];
 
+  const hexCodes = [
+    "#b10000",
+    "#b13d00",
+    "#b17600",
+    "#9300b1",
+    "#0054b1",
+    "#007ab1",
+    "#54b100",
+    "#98b100",
+    "#9b4a17"
+  ];
+  
+
   return (
     <div className='background-image'>
   <div className="container">
@@ -71,7 +84,7 @@ function Beamer() {
             <div key={index} className="family-item">
               <h2>{family.name}</h2>
               <div className="influence-bar">
-                <div>Einfluss: {influence.toFixed(0)}</div>
+                <div>Ansehen: {influence.toFixed(0)}</div>
                 <div className="family-bar" style={{ width: `${(family.reputation / maxInfluence) * 100}%` }}>
                   {family.teams.map((team, idx) => {
                     const teamInfluence = team.reputation;
@@ -81,7 +94,7 @@ function Beamer() {
                         key={idx}
                         style={{
                           width: `${teamWidth}%`,
-                          backgroundColor: colors[idx % colors.length],
+                          backgroundColor: hexCodes[(idx+ 3*(family.id - 1)) % hexCodes.length],
                           padding: '5px',
                           color: 'white',
                           textAlign: 'center',

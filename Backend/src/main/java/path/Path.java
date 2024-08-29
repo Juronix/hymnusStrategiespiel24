@@ -13,6 +13,7 @@ import tradeUnit.TradeUnit;
 
 public abstract class Path implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final City city1;
     private final City city2;
 

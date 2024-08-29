@@ -1,5 +1,6 @@
 package group;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import path.Path;
 import tradeUnit.TradeUnit;
 
-public class TeamsPath {
+public class TeamsPath implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final Path path;
     private final Set<TradeUnit> tradeUnits;
     private double tradeCapacity;

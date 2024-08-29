@@ -14,7 +14,6 @@ import time.GameTime;
 import time.GameTimer;
 
 import java.util.List;
-import java.util.Set;
 import java.util.Collection;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +44,7 @@ public class GameController {
     }
 
     @GetMapping("/getFamilies")
-    public Set<Family> getFamilies() {
+    public List<Family> getFamilies() {
         return game.getFamilies();
     }
 
@@ -189,7 +188,7 @@ public class GameController {
     @PostMapping("/loadGame") 
     public void loadGame(){
         try {
-            Database.loadDatabase(1);
+            game = Database.loadDatabase(1);
         } catch (Exception e) {
             e.printStackTrace();
         }

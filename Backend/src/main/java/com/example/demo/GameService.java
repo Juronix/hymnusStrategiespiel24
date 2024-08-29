@@ -1,8 +1,10 @@
 package com.example.demo;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 
-import com.example.demo.dto.FamilyPoliticianRequest;
+import database.Database;
 import org.springframework.stereotype.Service;
 
 import city.City;
@@ -16,14 +18,16 @@ import tradeUnit.TradeUnit;
 
 
 @Service
-public class GameService {
+public class GameService implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private GameTime time = new GameTime();
     private Set<Province> provinces = new HashSet<>();
     private City rome;
     private Senate senate = new Senate();
     private Map<Integer, City> cityMap = new HashMap<>();
-    private Set<Family> families = new HashSet<>();
+    private List<Family> families = new ArrayList<>(3);
 
     private static GameService gameService;
 
@@ -39,13 +43,14 @@ public class GameService {
         GameService.gameService = gameService;
     }
 
-    public static void reloadStaticGameService(GameService gameService) {
-        GameService.gameService = gameService;
+    public static GameService reloadStaticGameService(GameService gameService) {
+        return GameService.gameService = gameService;
     }
 
     public void setupGame() {
         createCitiesAndPaths();
         createSenateTeamsAndFamilies();
+        new Database(1, this);
     }
 
     public void createCitiesAndPaths(){
@@ -118,16 +123,16 @@ public class GameService {
 
     public void createSenateTeamsAndFamilies() {
         senate = new Senate();
-        Family family1 = new Family(1, "Family 1");
-        Family family2 = new Family(2, "Family 2");
-        Family family3 = new Family(3, "Family 3");
+        Family family1 = new Family(1, "Metellier");
+        Family family2 = new Family(2, "Tullier");
+        Family family3 = new Family(3, "Scipionen");
         families.add(family1);
         families.add(family2);
         families.add(family3);
         int i = 0;
         for (Family family : families) {
             for (int j = 0; j < 3; j++) {
-                new Team("Team " + i, i, family, rome);
+                new Team("Factio " + (i + 1), i, family, rome);
                 i++;
             }
         }
@@ -224,7 +229,7 @@ public class GameService {
         }
     }
 
-    public Set<Family> getFamilies() {
+    public List<Family> getFamilies() {
         return families;
     }
 

@@ -1,19 +1,19 @@
 package group;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 import city.City;
 
-public class Family {
+public class Family implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private int id;
 
     private String name;
     private double additionalReputation = 0.0;
     
-    private Set<Team> teams = new HashSet<>();
+    private List<Team> teams = new ArrayList<>(3);
 
     public Family(int id, String name) {
         this.id = id;
@@ -52,7 +52,7 @@ public class Family {
         this.additionalReputation = additionalReputation;
     }
 
-    public Set<Team> getTeams() {
+    public List<Team> getTeams() {
         return teams;
     }
 

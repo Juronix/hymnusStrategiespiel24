@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Provides a template for city-level specific implementations.
  */
 public abstract class City implements Serializable, Comparable<City> {
+
+    private static final long serialVersionUID = 1L;
     private final String name;
     private final int id;
     private final Province province;
