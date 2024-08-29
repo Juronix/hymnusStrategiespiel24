@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.*;
 
+import com.example.demo.dto.FamilyPoliticianRequest;
 import org.springframework.stereotype.Service;
 
 import city.City;
@@ -117,9 +118,9 @@ public class GameService {
 
     public void createSenateTeamsAndFamilies() {
         senate = new Senate();
-        Family family1 = new Family("Family 1");
-        Family family2 = new Family("Family 2");
-        Family family3 = new Family("Family 3");
+        Family family1 = new Family(1, "Family 1");
+        Family family2 = new Family(2, "Family 2");
+        Family family3 = new Family(3, "Family 3");
         families.add(family1);
         families.add(family2);
         families.add(family3);
@@ -227,6 +228,27 @@ public class GameService {
         return families;
     }
 
+    public Family getFamilyByName(String name) {
+        for (Family fam :
+                families) {
+            if(fam.getName().equals(name)){
+                return fam;
+            }
+        }
+        return null;
+    }
+
+    public Family getFamilyById(int id) {
+        for (Family fam :
+                families) {
+            if(fam.getId() == id){
+                return fam;
+            }
+        }
+        return null;
+    }
+
+
     public Senate getSenate() {
         return senate;
     }
@@ -268,10 +290,37 @@ public class GameService {
         return team.getTeamsGraph().getCitiesToTradeTo(isLandTradeUnit, city);
     }
 
-    public void createTradePost(int teamId, int cityId) {
-        Team team = this.getTeamById(teamId);
-        City city = this.getCity(cityId);
-        team.createTradePost(city);
-    }
+    public boolean setFamilyOfPolitician(String familyId, int polititanId) {
+        int famId = Integer.valueOf(familyId);
+        Family fam = getFamilyById(famId);
+        switch(polititanId) {
+            case 1:
+                getSenate().setFamilyOfPolitician1(fam);
+                break;
+            case 2:
+                getSenate().setFamilyOfPolitician2(fam);
+                break;
+            case 3:
+                getSenate().setFamilyOfPolitician3(fam);
+                break;
+            case 4:
+                getSenate().setFamilyOfPolitician4(fam);
+                break;
+            case 5:
+                getSenate().setFamilyOfPolitician5(fam);
+                break;
+            case 6:
+                getSenate().setFamilyOfPolitician6(fam);
+                break;
+            case 7:
+                getSenate().setFamilyOfPolitician7(fam);
+                break;
+            case 8:
+                getSenate().setFamilyOfPolitician8(fam);
+                break;
+        }
 
+
+        return true;
+    }
 }

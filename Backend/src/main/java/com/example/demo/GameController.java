@@ -54,6 +54,16 @@ public class GameController {
         return game.getSenate();
     }
 
+    @PostMapping("/setFamilyOfPolitician")
+    public ResponseEntity<String> setFamilyOfPolitician(@RequestBody FamilyPoliticianRequest request) {
+        boolean success = game.setFamilyOfPolitician(request.getFamilyId(), request.getPoliticianId());
+        if (success) {
+            return ResponseEntity.ok("family of politician updated successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to update family of politician");
+        }
+    }
+
     @PostMapping("/testInfluence")
     public void testInfluence(){
         double add = 1.0;

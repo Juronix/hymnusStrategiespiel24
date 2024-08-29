@@ -3,3 +3,57 @@
     background-size: cover;
     height: 100vh;
 }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+    background-image: url("/public/Hintergrund.png");
+    background-size: cover;
+    padding: 20px;
+  }
+  
+  .senators-left, .senators-right {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .senator-item {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .central-content {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .family-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .influence-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .family-bar {
+    display: flex;
+    margin-top: 10px;
+    background-color: #eee;
+  }
+  

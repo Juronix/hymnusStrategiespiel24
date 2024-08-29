@@ -47,15 +47,32 @@ function Beamer() {
 
   return (
     <div className='background-image'>
+  <div className="container">
+    <div className="senators-left">
+      {(senate.nameList || []).slice(0, 4).map((senator, index) => {
+        const familyKey = `familyOfPolitician${index + 1}`;
+        const family = senate[familyKey] || {};
+        return (
+          <div key={index} className="senator-item">
+            <h3>{senator}</h3>
+            {family && family.name && (
+              <p>{family.name}</p>
+            )}
+          </div>
+        );
+      })}
+    </div>
+
+    <div className="central-content">
       {families.length > 0 ? (
         families.map((family, index) => {
           const influence = family.reputation;
           return (
-            <div key={index} style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc' }}>
+            <div key={index} className="family-item">
               <h2>{family.name}</h2>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{ width: '200px' }}>Einfluss: {influence.toFixed(0)}</div>
-                <div style={{ width: `${(family.reputation / maxInfluence) * 100}%`, backgroundColor: '#eee', marginLeft: '10px', display: 'flex' }}>
+              <div className="influence-bar">
+                <div>Einfluss: {influence.toFixed(0)}</div>
+                <div className="family-bar" style={{ width: `${(family.reputation / maxInfluence) * 100}%` }}>
                   {family.teams.map((team, idx) => {
                     const teamInfluence = team.reputation;
                     const teamWidth = (teamInfluence / influence) * 100;
@@ -99,6 +116,23 @@ function Beamer() {
       ) : (
         <p>Loading families...</p>
       )}
+    </div>
+
+    <div className="senators-right">
+    {(senate.nameList || []).slice(4, 8).map((senator, index) => {
+        const familyKey = `familyOfPolitician${index + 5}`;
+        const family = senate[familyKey] || {};
+        return (
+          <div key={index} className="senator-item">
+            <h3>{senator}</h3>
+            {family && family.name && (
+              <p>{family.name}</p>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </div>
     </div>
   );
 }

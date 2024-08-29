@@ -51,7 +51,7 @@ public class TeamsGraphTest {
         Path pathCD = new Road(cityC, cityD);
         Path pathDR = new Road(cityD, rome);
 
-        Family family = new Family("TestFamily");
+        Family family = new Family(1, "TestFamily");
 
         team = new Team("TestTeam", 1, family, rome);
         teamsGraph = team.getTeamsGraph();

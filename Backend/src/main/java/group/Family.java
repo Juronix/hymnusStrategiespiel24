@@ -8,12 +8,15 @@ import city.City;
 
 public class Family {
 
+    private int id;
+
     private String name;
     private double additionalReputation = 0.0;
     
     private Set<Team> teams = new HashSet<>();
 
-    public Family(String name) {
+    public Family(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -67,4 +70,11 @@ public class Family {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
