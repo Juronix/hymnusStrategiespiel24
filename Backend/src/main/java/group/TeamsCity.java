@@ -90,6 +90,13 @@ public class TeamsCity implements Serializable {
         }
     }
 
+    public double getCapacityUsedInPercent(){
+        if(getCapacityNeeded() == 0){
+            return 0;
+        }
+        return getCapacityUsed()/getCapacityNeeded()*100;
+    }
+
     public void addPath(TeamsPath teamsPath) {
         teamPaths.add(teamsPath);
     }

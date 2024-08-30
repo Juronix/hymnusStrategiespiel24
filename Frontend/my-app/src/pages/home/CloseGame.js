@@ -6,7 +6,7 @@ function CloseGame() {
   const handleSetup = async () => {
     try {
       setStatus('Sending...');
-      const response = await fetch('http://localhost:8080/closeGame', {
+      const response = await fetch(`http://${window.location.hostname}:8080/closeGame`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

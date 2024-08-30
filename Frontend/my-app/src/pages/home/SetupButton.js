@@ -6,7 +6,7 @@ function SetupButton() {
   const handleSetup = async () => {
     try {
       setStatus('Sending...');
-      const response = await fetch('http://localhost:8080/setup', {
+      const response = await fetch(`http://${window.location.hostname}:8080/setup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

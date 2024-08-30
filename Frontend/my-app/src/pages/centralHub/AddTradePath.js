@@ -14,7 +14,7 @@ function AddTradePath({ teamId }) {
       if (unitLevel) {
         try {
           const response = await fetch(
-            `http://localhost:8080/getCitiesToTradeTo2?teamId=${teamId}&isLandTradeUnit=${isLandTradeUnit}`
+            `http://${window.location.hostname}:8080/getCitiesToTradeTo2?teamId=${teamId}&isLandTradeUnit=${isLandTradeUnit}`
           );
           if (!response.ok) throw new Error('Failed to fetch cities');
           const data = await response.json();
@@ -34,7 +34,7 @@ function AddTradePath({ teamId }) {
       if (selectedCity1) {
         try {
           const response = await fetch(
-            `http://localhost:8080/getCitiesToTradeTo3?teamId=${teamId}&isLandTradeUnit=${isLandTradeUnit}&cityId=${selectedCity1}`
+            `http://${window.location.hostname}:8080/getCitiesToTradeTo3?teamId=${teamId}&isLandTradeUnit=${isLandTradeUnit}&cityId=${selectedCity1}`
           );
           if (!response.ok) throw new Error('Failed to fetch cities');
           const data = await response.json();
@@ -50,7 +50,7 @@ function AddTradePath({ teamId }) {
 
   const handleAddTradePath = async () => {
     try {
-      await fetch('http://localhost:8080/createNewTradeUnit', {
+      await fetch(`http://${window.location.hostname}:8080/createNewTradeUnit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

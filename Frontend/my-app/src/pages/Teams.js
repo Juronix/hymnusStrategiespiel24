@@ -8,7 +8,7 @@ function Teams() {
     // Fetch data from the server
     const fetchFamilies = async () => {
       try {
-        const response = await fetch('http://localhost:8080/getFamilies');
+        const response = await fetch(`http://${window.location.hostname}:8080/getFamilies`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -32,7 +32,6 @@ function Teams() {
 
   return (
     <div>
-      <h1>Teams Overview</h1>
       {families.length > 0 ? (
         <div>
           <div style={{ marginBottom: '20px' }}>
@@ -58,36 +57,52 @@ function Teams() {
           </div>
           {currentTeam && (
             <div>
-              <h2>{currentTeam.name} Details</h2>
-              <h3>Cities</h3>
+              <h2>{currentTeam.name}</h2>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>City Name</th>
-                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Capacity Used</th>
-                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Reputation</th>
+                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Stadt</th>
+                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Kapazität</th>
+                    <th style={{ border: '1px solid #ddd', padding: '8px' }}>Ansehen</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {currentTeam.teamsGraph.teamCities.map((teamCity, idx) => (
-                    <tr key={idx}>
-                      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{teamCity.city.name}</td>
-                      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{teamCity.capacityUsed.toFixed(2)}</td>
-                      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{teamCity.city.reputation.toFixed(2)}</td>
-                    </tr>
-                  ))}
+                {currentTeam.teamsGraph.teamCities.map((teamCity, idx) => (
+  teamCity.id > 0 && (
+    <tr key={idx}>
+      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{teamCity.city.name}</td>
+      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{teamCity.capacityUsedInPercent.toFixed(0)}%</td>
+      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{teamCity.city.reputation.toFixed(0)}</td>
+    </tr>
+  )
+))}
+
                 </tbody>
               </table>
-              <h3>Team Paths</h3>
-              {currentTeam.teamsGraph.teamPaths.length > 0 ? (
-                <ul>
-                  {currentTeam.teamsGraph.teamPaths.map((path, idx) => (
-                    <li key={idx}>Path ID: {path.id}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No paths available for this team.</p>
-              )}
+              <h3>Handelwege</h3>
+              {currentTeam.teamsGraph.teamPaths && currentTeam.teamsGraph.teamPaths.map((teamPath, index) => (
+                teamPath ? (
+                  <div key={index}>
+                    <div style={{width: '16%', float:'left'}}>{teamPath.path.city1?.name || 'Unbekannte Stadt'} - {teamPath.path.city2?.name || 'Unbekannte Stadt'}</div>
+  
+                    {/* Berechnung und Anzeige des Balkendiagramms */}
+                    <div style={{ marginTop: '5px', marginBottom: '10px', border: '1px solid',                             display: 'inline-block',
+                            width: '53.5%'}}>
+                      <div
+                        style={{
+                          width: `${(teamPath.utilisation / teamPath.tradeCapacity) * 100}%`,
+                          height: '20px',
+                          backgroundColor: 
+                            teamPath.utilisation / teamPath.tradeCapacity <= 0.6 ? 'green' :
+                            teamPath.utilisation / teamPath.tradeCapacity <= 0.8 ? 'yellow' : 'red',
+                        }}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div key={index}>Pfad ist nicht verfügbar</div>
+                )
+              ))}
             </div>
           )}
         </div>

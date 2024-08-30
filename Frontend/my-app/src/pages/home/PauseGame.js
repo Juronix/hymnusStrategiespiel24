@@ -6,7 +6,7 @@ function PauseGame() {
   const handleSetup = async () => {
     try {
       setStatus('Sending...');
-      const response = await fetch('http://localhost:8080/pauseGame', {
+      const response = await fetch(`http://${window.location.hostname}:8080/pauseGame`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

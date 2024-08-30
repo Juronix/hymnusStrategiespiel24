@@ -12,7 +12,7 @@ function CentralTeams() {
   useEffect(() => {
     const fetchFamilies = async () => {
       try {
-        const response = await fetch('http://localhost:8080/getFamilies');
+        const response = await fetch(`http://${window.location.hostname}:8080/getFamilies`);
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setFamilies(data);
@@ -23,7 +23,7 @@ function CentralTeams() {
 
     const fetchCities = async () => {
       try {
-        const response = await fetch('http://localhost:8080/getCities');
+        const response = await fetch(`http://${window.location.hostname}:8080/getCities`);
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setCities(data);
@@ -44,7 +44,7 @@ function CentralTeams() {
 
   const handleNameChange = async (id) => {
     try {
-      await fetch('http://localhost:8080/setTeamName', {
+      await fetch(`http://${window.location.hostname}:8080/setTeamName`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ function CentralTeams() {
 
   const handleAddReputation = async (id) => {
     try {
-      await fetch('http://localhost:8080/addReputation', {
+      await fetch(`http://${window.location.hostname}:8080/addReputation`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ function CentralTeams() {
 
   const handleReputationMultiplier = async (id) => {
     try {
-      await fetch('http://localhost:8080/setReputationMultiplier', {
+      await fetch(`http://${window.location.hostname}:8080/setReputationMultiplier`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ function CentralTeams() {
 
   const handleBuild = async (id) => {
     try {
-      await fetch('http://localhost:8080/buildCity', {
+      await fetch(`http://${window.location.hostname}:8080/buildCity`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ function CentralTeams() {
 
   const handleResetHymns = async (id) => {
     try {
-      await fetch('http://localhost:8080/resetHymnen', {
+      await fetch(`http://${window.location.hostname}:8080/resetHymnen`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

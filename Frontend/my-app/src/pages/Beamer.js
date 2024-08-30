@@ -8,7 +8,7 @@ function Beamer() {
   useEffect(() => {
     // Funktion zum Laden der Daten
     const fetchFamiliesData = () => {
-      fetch('http://localhost:8080/getFamilies')
+      fetch(`http://${window.location.hostname}:8080/getFamilies`)
         .then(response => response.json())
         .then(data => {
           setFamilies(data);
@@ -17,7 +17,7 @@ function Beamer() {
     };
 
     const fetchSenateData = () => {
-      fetch('http://localhost:8080/getSenate')
+      fetch(`http://${window.location.hostname}:8080/getSenate`)
         .then(response => response.json())
         .then(data => {
           console.log('Daten aktualisiert:', data);

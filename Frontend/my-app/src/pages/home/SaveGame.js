@@ -6,7 +6,7 @@ function SaveGame() {
   const handleSetup = async () => {
     try {
       setStatus('Sending...');
-      const response = await fetch('http://localhost:8080/saveGame', {
+      const response = await fetch(`http://${window.location.hostname}:8080/saveGame`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

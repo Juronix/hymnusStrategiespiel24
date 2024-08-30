@@ -7,7 +7,7 @@ function CentralSenate() {
   useEffect(() => {
     const fetchFamilies = async () => {
       try {
-        const response = await fetch('http://localhost:8080/getFamilies');
+        const response = await fetch(`http://${window.location.hostname}:8080/getFamilies`);
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setFamilies(data);
@@ -18,7 +18,7 @@ function CentralSenate() {
 
     const fetchSenate = async () => {
       try {
-        const response = await fetch('http://localhost:8080/getSenate');
+        const response = await fetch(`http://${window.location.hostname}:8080/getSenate`);
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setSenate(data);
@@ -40,7 +40,7 @@ function CentralSenate() {
 
   const handleFamilySelection = async (index, familyId) => {
     try {
-      await fetch('http://localhost:8080/setFamilyOfPolitician', {
+      await fetch(`http://${window.location.hostname}:8080/setFamilyOfPolitician`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ function CentralSenate() {
       });
 
       // Nach erfolgreichem Update den Senat neu laden
-    //   const response = await fetch('http://localhost:8080/getSenate');
+    //   const response = await fetch(`http://${window.location.hostname}:8080/getSenate`);
     //   const updatedSenate = await response.json();
     //   setSenate(updatedSenate);
     } catch (error) {
