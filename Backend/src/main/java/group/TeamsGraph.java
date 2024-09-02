@@ -111,6 +111,9 @@ public class TeamsGraph implements Serializable {
         double rGraph[][] = new double[teamCityMap.size() + 1][teamCityMap.size() + 1];
         int parent[] = new int[teamCityMap.size() + 1];
 
+        //reset capacities used
+
+
         // fill rGraph with 0
         for (int i = 0; i < teamCityMap.size() + 1; i++) {
             for (int j = 0; j < teamCityMap.size() + 1; j++) {
@@ -131,6 +134,7 @@ public class TeamsGraph implements Serializable {
                 int id = teamsCity.getId();
                 rGraph[source][id] = teamsCity.getCapacityNeeded();
             }
+            teamsCity.resetCapacityUsed();
         });
 
         // while there is a path from source to sink

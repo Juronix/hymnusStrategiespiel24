@@ -188,7 +188,8 @@ public class GameController {
     @PostMapping("/loadGame") 
     public void loadGame(){
         try {
-            game = Database.loadDatabase(1);
+        //    game = Database.loadDatabase(1);
+            game = Database.loadSafetySaveDatabse(1, 1, 40);
         } catch (Exception e) {
             e.printStackTrace();
         }

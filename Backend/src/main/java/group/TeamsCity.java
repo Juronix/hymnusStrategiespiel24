@@ -41,6 +41,7 @@ public class TeamsCity implements Serializable {
 
     public void resetCapacityUsed() {
         capacityUsed = 0;
+        averageFlowDistance = 1;
     }
 
     public void increaseCapacityUsed(double capacityNeeded) {

@@ -54,9 +54,9 @@ public class Database implements Serializable {
 		return GameService.reloadStaticGameService(activDatabase.gameService);
 	}
 
-	public static void loadSafetySaveDatabse(final int gameID, final int hour, final int minute) throws Exception {
+	public static GameService loadSafetySaveDatabse(final int gameID, final int hour, final int minute) throws Exception {
 		activDatabase = databaseIO.load("database-G"+gameID+"-"+hour+"-"+minute);
-		GameService.reloadStaticGameService(activDatabase.gameService);
+		return GameService.reloadStaticGameService(activDatabase.gameService);
 	}
 
 	public static void loadDatabaseFromString(final String saveID) throws Exception {

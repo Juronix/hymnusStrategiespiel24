@@ -81,7 +81,7 @@ public class TeamsGraphTestWithGameService {
             System.out.printf("%-15s%-20d%-20.2f\n", 
                 city.getCity().getName(), 
                 city.getCity().getDistanceToRome(), 
-                city.getCapacityUsed()
+                city.getCapacityUsedInPercent()
             );
         }
 
